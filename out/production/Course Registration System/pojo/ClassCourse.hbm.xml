@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="pojo.ClassCourse" table="class_course" schema="qldkhp" >
+        <id name="id">
+            <column name="Id" sql-type="int" not-null="true"/>
+        </id>
+        <property name="classId">
+            <column name="ClassId" sql-type="tinyint" not-null="true"/>
+        </property>
+        <property name="courseId">
+            <column name="CourseId" sql-type="tinyint" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="pojo.Registers" table="registers" schema="qldkhp">
+        <id name="id">
+            <column name="Id" sql-type="int" not-null="true"/>
+            <generator class="increment"></generator>
+        </id>
+        <property name="studentId">
+            <column name="StudentId" sql-type="int"/>
+        </property>
+        <property name="courseId">
+            <column name="CourseId" sql-type="int"/>
+        </property>
+        <property name="time">
+            <column name="Time" sql-type="datetime"/>
+        </property>
+    </class>
+</hibernate-mapping>
