@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="pojo.Users" table="users" schema="qldkhp">
+        <id name="id">
+            <column name="Id" sql-type="int"/>
+        </id>
+        <property name="permission">
+            <column name="Permission" sql-type="tinyint"/>
+        </property>
+        <property name="username">
+            <column name="Username" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="password">
+            <column name="Password" sql-type="varchar(255)"/>
+        </property>
+        <property name="name">
+            <column name="Name" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="dob">
+            <column name="DOB" sql-type="date"/>
+        </property>
+        <property name="gender">
+            <column name="Gender" sql-type="tinyint"/>
+        </property>
+        <property name="classId">
+            <column name="ClassId" sql-type="int" not-null="true"/>
+        </property>
+        <property name="stdCode">
+            <column name="StdCode" sql-type="varchar(15)" length="15" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

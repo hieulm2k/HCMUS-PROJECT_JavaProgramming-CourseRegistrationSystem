@@ -1,1 +1,1 @@
-# HCMUS-JavaProgramming-CourseRegistrationSystem
+# HCMUS-JavaProgramming-courseRegistrationSystem
