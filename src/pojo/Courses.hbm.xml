@@ -30,5 +30,23 @@
         <property name="maxSlot">
             <column name="MaxSlot" sql-type="int"/>
         </property>
+        <set name="classCourseSet" inverse="true">
+            <key>
+                <column name="Id" sql-type="int" not-null="true"/>
+            </key>
+            <one-to-many class="pojo.ClassCourse"/>
+        </set>
+        <set name="registersSet" inverse="true">
+            <key>
+                <column name="Id" sql-type="int" not-null="true"/>
+            </key>
+            <one-to-many class="pojo.Registers"/>
+        </set>
+        <many-to-one class="pojo.Semesters" name="semesters" fetch="join" lazy="false" cascade="save-update">
+            <column name="Id" sql-type="int" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="pojo.Subjects" name="subjects" fetch="join" lazy="false" cascade="save-update">
+            <column name="Id" sql-type="int" not-null="true"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

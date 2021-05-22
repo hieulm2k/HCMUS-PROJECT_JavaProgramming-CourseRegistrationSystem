@@ -1,7 +1,9 @@
 package pojo;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Users {
     private int id;
@@ -13,6 +15,24 @@ public class Users {
     private byte gender;
     private Integer classId;
     private String stdCode;
+    private Set<Registers> registersSet = new HashSet<Registers>(0);
+    private Classes classes;
+
+    public Classes getClasses() {
+        return classes;
+    }
+
+    public void setClasses(Classes classes) {
+        this.classes = classes;
+    }
+
+    public Set<Registers> getRegistersSet() {
+        return registersSet;
+    }
+
+    public void setRegistersSet(Set<Registers> registersSet) {
+        this.registersSet = registersSet;
+    }
 
     public int getId() {
         return id;

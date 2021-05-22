@@ -1,6 +1,8 @@
 package pojo;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Courses {
     private int id;
@@ -11,9 +13,45 @@ public class Courses {
     private int weekDay;
     private int timeCase;
     private int maxSlot;
+    private  Semesters semesters;
+    private  Subjects subjects;
+    private Set<ClassCourse> classCourseSet = new HashSet<ClassCourse>(0);
+    private Set<Registers> registersSet = new HashSet<Registers>(0);
+
+    public Set<Registers> getRegistersSet() {
+        return registersSet;
+    }
+
+    public void setRegistersSet(Set<Registers> registersSet) {
+        this.registersSet = registersSet;
+    }
+
+    public Set<ClassCourse> getClassCourseSet() {
+        return classCourseSet;
+    }
+
+    public void setClassCourseSet(Set<ClassCourse> classCourseSet) {
+        this.classCourseSet = classCourseSet;
+    }
+
+    public Semesters getSemesters() {
+        return semesters;
+    }
+
+    public void setSemesters(Semesters semesters) {
+        this.semesters = semesters;
+    }
 
     public int getId() {
         return id;
+    }
+
+    public Subjects getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(Subjects subjects) {
+        this.subjects = subjects;
     }
 
     public void setId(int id) {

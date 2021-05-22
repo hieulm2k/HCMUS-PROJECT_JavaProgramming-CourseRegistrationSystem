@@ -1,7 +1,9 @@
 package pojo;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Semesters {
     private int id;
@@ -10,6 +12,24 @@ public class Semesters {
     private Date startDate;
     private Date endDate;
     private byte isCurrent;
+    private Set<Sessions> sessionsSet = new HashSet<Sessions>(0);
+    private Set<Courses> coursesSet = new HashSet<Courses>(0);
+
+    public Set<Courses> getCoursesSet() {
+        return coursesSet;
+    }
+
+    public void setCoursesSet(Set<Courses> coursesSet) {
+        this.coursesSet = coursesSet;
+    }
+
+    public Set<Sessions> getSessionsSet() {
+        return sessionsSet;
+    }
+
+    public void setSessionsSet(Set<Sessions> sessionsSet) {
+        this.sessionsSet = sessionsSet;
+    }
 
     public int getId() {
         return id;

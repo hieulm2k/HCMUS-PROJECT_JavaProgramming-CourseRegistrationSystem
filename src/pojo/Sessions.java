@@ -8,6 +8,15 @@ public class Sessions {
     private int semesterId;
     private Timestamp start;
     private Timestamp end;
+    private  Semesters semesters;
+
+    public Semesters getSemesters() {
+        return semesters;
+    }
+
+    public void setSemesters(Semesters semesters) {
+        this.semesters = semesters;
+    }
 
     public int getId() {
         return id;

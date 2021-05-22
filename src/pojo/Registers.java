@@ -8,6 +8,24 @@ public class Registers {
     private int studentId;
     private int courseId;
     private Timestamp time;
+    private Users users;
+    private Courses courses;
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
+    }
+
+    public Courses getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Courses courses) {
+        this.courses = courses;
+    }
 
     public int getId() {
         return id;

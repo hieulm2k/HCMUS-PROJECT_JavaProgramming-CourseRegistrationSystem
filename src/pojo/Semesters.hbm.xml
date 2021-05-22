@@ -24,5 +24,17 @@
         <property name="isCurrent">
             <column name="IsCurrent" sql-type="tinyint"/>
         </property>
+        <set name="sessionsSet" inverse="true">
+            <key>
+                <column name="Id" sql-type="int" not-null="true"/>
+            </key>
+            <one-to-many class="pojo.Sessions"/>
+        </set>
+        <set name="coursesSet" inverse="true">
+            <key>
+                <column name="Id" sql-type="int" not-null="true"/>
+            </key>
+            <one-to-many class="pojo.Courses"/>
+        </set>
     </class>
 </hibernate-mapping>

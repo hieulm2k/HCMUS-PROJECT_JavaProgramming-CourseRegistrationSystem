@@ -1,12 +1,23 @@
 package pojo;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Subjects {
     private int id;
     private String code;
     private String name;
     private Integer credit;
+    Set<Courses> coursesSet = new HashSet<Courses>(0);
+
+    public Set<Courses> getCoursesSet() {
+        return coursesSet;
+    }
+
+    public void setCoursesSet(Set<Courses> coursesSet) {
+        this.coursesSet = coursesSet;
+    }
 
     public int getId() {
         return id;
