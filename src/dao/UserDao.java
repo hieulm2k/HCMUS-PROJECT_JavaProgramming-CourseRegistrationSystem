@@ -47,6 +47,25 @@ public class UserDao {
         return users;
     }
 
+    public static Users getByUsername(String username) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Users user  = null;
+
+        try{
+            final String hql = "select u from Users u where u.username=:username";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("username",username);
+
+            user = (Users) query.list().get(0);
+        } catch (HibernateException e) {
+            System.out.println(e);
+        } finally {
+            session.close();
+        }
+        return user;
+    }
+
     public static void delete(Users users) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();

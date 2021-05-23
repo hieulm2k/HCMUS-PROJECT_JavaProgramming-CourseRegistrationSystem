@@ -18,5 +18,11 @@
             </key>
             <one-to-many class="pojo.ClassCourse"/>
         </set>
+        <set name="usersSet" inverse="true">
+            <key>
+                <column name="Id" sql-type="int" not-null="false"/>
+            </key>
+            <one-to-many class="pojo.Users"/>
+        </set>
     </class>
 </hibernate-mapping>

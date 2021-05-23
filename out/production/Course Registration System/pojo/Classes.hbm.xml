@@ -10,8 +10,19 @@
             <generator class="increment"></generator>
         </id>
         <property name="name">
-            <column name="name" sql-type="varchar(45)" length="45" not-null="true"/>
+            <column name="name" sql-type="varchar(45)" length="45" not-null="true" unique="true"/>
         </property>
-
+        <set name="classCourseSet" inverse="true">
+            <key>
+                <column name="Id" sql-type="int" not-null="true"/>
+            </key>
+            <one-to-many class="pojo.ClassCourse"/>
+        </set>
+        <set name="usersSet" inverse="true">
+            <key>
+                <column name="Id" sql-type="int" not-null="false"/>
+            </key>
+            <one-to-many class="pojo.Users"/>
+        </set>
     </class>
 </hibernate-mapping>

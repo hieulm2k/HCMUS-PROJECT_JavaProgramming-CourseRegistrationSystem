@@ -7,6 +7,7 @@
     <class name="pojo.ClassCourse" table="class_course" schema="qldkhp" >
         <id name="id">
             <column name="Id" sql-type="int" not-null="true"/>
+            <generator class="increment"></generator>
         </id>
         <property name="classId">
             <column name="ClassId" sql-type="tinyint" not-null="true"/>
@@ -14,5 +15,13 @@
         <property name="courseId">
             <column name="CourseId" sql-type="tinyint" not-null="true"/>
         </property>
+
+        <many-to-one class="pojo.Courses" name="courses" insert="false" update="false" fetch="join" lazy="false" cascade="save-update">
+            <column name="Id" sql-type="int" not-null="true"/>
+        </many-to-one>
+
+        <many-to-one class="pojo.Classes" name="classes" insert="false" update="false" fetch="join" lazy="false" cascade="save-update">
+            <column name="Id" sql-type="int" not-null="true"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

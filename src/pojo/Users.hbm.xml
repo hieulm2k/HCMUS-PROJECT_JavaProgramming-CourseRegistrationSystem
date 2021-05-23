@@ -39,7 +39,7 @@
             </key>
             <one-to-many class="pojo.Registers"/>
         </set>
-        <many-to-one class="pojo.Classes" name="classes" fetch="join" lazy="false" cascade="save-update">
+        <many-to-one class="pojo.Classes" name="classes" insert="false" update="false" fetch="join" lazy="false" cascade="save-update">
             <column name="Id" sql-type="int" not-null="false"/>
         </many-to-one>
     </class>

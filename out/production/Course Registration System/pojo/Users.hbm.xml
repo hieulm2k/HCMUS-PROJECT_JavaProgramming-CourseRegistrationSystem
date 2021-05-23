@@ -7,6 +7,7 @@
     <class name="pojo.Users" table="users" schema="qldkhp">
         <id name="id">
             <column name="Id" sql-type="int"/>
+            <generator class="increment"></generator>
         </id>
         <property name="permission">
             <column name="Permission" sql-type="tinyint"/>
@@ -27,10 +28,19 @@
             <column name="Gender" sql-type="tinyint"/>
         </property>
         <property name="classId">
-            <column name="ClassId" sql-type="int" not-null="true"/>
+            <column name="ClassId" sql-type="int" not-null="false"/>
         </property>
         <property name="stdCode">
-            <column name="StdCode" sql-type="varchar(15)" length="15" not-null="true"/>
+            <column name="StdCode" sql-type="varchar(15)" length="15" not-null="false" unique="true"/>
         </property>
+        <set name="registersSet" inverse="true">
+            <key>
+                <column name="Id" sql-type="int" not-null="true"/>
+            </key>
+            <one-to-many class="pojo.Registers"/>
+        </set>
+        <many-to-one class="pojo.Classes" name="classes" insert="false" update="false" fetch="join" lazy="false" cascade="save-update">
+            <column name="Id" sql-type="int" not-null="false"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

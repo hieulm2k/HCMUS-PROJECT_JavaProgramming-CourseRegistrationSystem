@@ -7,6 +7,7 @@
     <class name="pojo.Sessions" table="sessions" schema="qldkhp">
         <id name="id">
             <column name="Id" sql-type="int"/>
+            <generator class="increment"></generator>
         </id>
         <property name="semesterId">
             <column name="SemesterId" sql-type="int"/>
@@ -17,5 +18,8 @@
         <property name="end">
             <column name="End" sql-type="datetime"/>
         </property>
+        <many-to-one class="pojo.Semesters" name="semesters" insert="false" update="false" fetch="join" lazy="false" cascade="save-update">
+            <column name="Id" sql-type="int" not-null="true"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

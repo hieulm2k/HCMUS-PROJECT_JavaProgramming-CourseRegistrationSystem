@@ -16,11 +16,11 @@
             <column name="CourseId" sql-type="tinyint" not-null="true"/>
         </property>
 
-        <many-to-one class="pojo.Courses" name="courses" fetch="join" lazy="false" cascade="save-update">
+        <many-to-one class="pojo.Courses" name="courses" insert="false" update="false" fetch="join" lazy="false" cascade="save-update">
             <column name="Id" sql-type="int" not-null="true"/>
         </many-to-one>
 
-        <many-to-one class="pojo.Classes" name="classes" fetch="join" lazy="false" cascade="save-update">
+        <many-to-one class="pojo.Classes" name="classes" insert="false" update="false" fetch="join" lazy="false" cascade="save-update">
             <column name="Id" sql-type="int" not-null="true"/>
         </many-to-one>
     </class>
