@@ -1,6 +1,9 @@
 package course_registration_system;
 
-import course_registration_system.jPanel_dashboard;
+import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount;
+import course_registration_system.JPanel_MinistryDashboard.JPanel_dashboard;
+import course_registration_system.JPanel_MinistryDashboard.JPanel_myAccount;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -8,14 +11,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class MinistryDashboard extends JFrame {
-    private JPanel rootPanel;
+    private JPanel jPanel_root;
     private JPanel logo;
-    private JPanel sidePanel;
-    private JPanel headPanel;
+    private JPanel jPanel_side;
+    private JPanel jPanel_header;
     private JPanel jPanel_main;
-    private JPanel menuPanel;
+    private JPanel jPanel_menu;
     private JLabel jLabel_menuItem8;
-    private JLabel jLabel_menuItem9;
     private JLabel jLabel_menuItem1;
     private JLabel jLabel_menuItem2;
     private JLabel jLabel_menuItem3;
@@ -23,7 +25,10 @@ public class MinistryDashboard extends JFrame {
     private JLabel jLabel_menuItem5;
     private JLabel jLabel_menuItem6;
     private JLabel jLabel_menuItem7;
-    private JPanel jPanel_account;
+    private JLabel jLabel_menuItem10;
+    private JLabel jLabel_menuItem9;
+    private JLabel jLabel_menuItem11;
+
     // default border for the menu items
     Border defaultBorder = BorderFactory.createMatteBorder(0,0,0,0, new Color(46,49,49));
 
@@ -31,13 +36,10 @@ public class MinistryDashboard extends JFrame {
     Border yellowBorder = BorderFactory.createMatteBorder(1,0,1,0,Color.YELLOW);
 
     // create array of jlabels
-    JLabel[] menuLabels = new JLabel[9];
-
-    // create array of jPanels
-    JPanel[] panels = new JPanel[2];
+    JLabel[] menuLabels = new JLabel[11];
 
     public MinistryDashboard(){
-        add(rootPanel);
+        add(jPanel_root);
         setTitle("Ministry Dashboard");
         setSize(1280,720);
         setResizable(false);
@@ -46,7 +48,7 @@ public class MinistryDashboard extends JFrame {
         // set borders
         // panel logo border
         Border panelBorder = BorderFactory.createMatteBorder(0,0,2,0, Color.lightGray);
-        headPanel.setBorder(panelBorder);
+        jPanel_header.setBorder(panelBorder);
 
         // populate the menuLabels array
         menuLabels[0] = jLabel_menuItem1;
@@ -58,79 +60,112 @@ public class MinistryDashboard extends JFrame {
         menuLabels[6] = jLabel_menuItem7;
         menuLabels[7] = jLabel_menuItem8;
         menuLabels[8] = jLabel_menuItem9;
+        menuLabels[9] = jLabel_menuItem10;
+        menuLabels[10] = jLabel_menuItem11;
 
-        // populate the menuLabels array
-        panels[0] = jPanel_main;
-        panels[1] = jPanel_account;
+        jPanel_main.add(new JPanel_dashboard().getjPanel_dashboard());
 
         addActionToMenuLabels();
     }
 
     public void addActionToMenuLabels(){
-        Component[] components = menuPanel.getComponents();
+        Component[] components = jPanel_menu.getComponents();
 
         for(Component component : components){
             if(component instanceof JLabel){
-                JLabel label = (JLabel) component;
-                label.addMouseListener(new MouseListener() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        setLabelBackground(label);
-
-                        switch (label.getText().trim()){
-                            case "Dashboard":
-                                //showPanel(jPanel_main);
-                                break;
-                            case "Account":
-                                //showPanel(jPanel_account);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-
-                    }
-
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-
-                    }
-
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                        label.setBorder(yellowBorder);
-                    }
-
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                        label.setBorder(defaultBorder);
-                    }
-                });
+                addMouseListener(component);
             }
         }
     }
 
-    public void setLabelBackground(JLabel label){
-        for(JLabel menuItem : menuLabels) {
+    public void addMouseListener(Component component){
+        JLabel label = (JLabel) component;
+        label.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setLabelBackground(label, menuLabels);
+                switch (label.getText().trim()){
+                    case "Dashboard":
+                        showPanel(new JPanel_dashboard().getjPanel_dashboard());
+                        break;
+                    case "All Account":
+                        showPanel(new JPanel_allAccount().getjPanel_allAccount());
+                        break;
+                    case "Subject":
+                        break;
+                    case "Semester":
+
+                        break;
+                    case "Class":
+
+                        break;
+                    case "Student":
+
+                        break;
+                    case "Session":
+
+                        break;
+                    case "Course":
+
+                        break;
+                    case "Register List":
+
+                        break;
+                    case "My Account":
+                        showPanel(new JPanel_myAccount().getjPanel_myAcount());
+                        break;
+                    case "Log Out":
+                        dispose();
+                        Login login = new Login();
+                        login.setVisible(true);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                label.setBorder(yellowBorder);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                label.setBorder(defaultBorder);
+            }
+        });
+    }
+
+    private void showPanel(JPanel jPanel) {
+
+        SwingUtilities.invokeLater(
+               new Runnable() {
+                   public void run() {
+                       jPanel_main.removeAll();
+                       jPanel_main.add(jPanel);
+                   }
+               }
+       );
+    }
+
+    public void setLabelBackground(JLabel label, JLabel[] jLabels){
+
+        for(JLabel menuItem : jLabels) {
             menuItem.setForeground(Color.WHITE);
             menuItem.setBackground(new Color(36, 37, 42));
         }
+
         label.setBackground(Color.WHITE);
         label.setForeground(new Color(36, 37, 42));
-    }
-
-    public void showPanel(JPanel panel){
-        for(JPanel pnl : panels){
-            pnl.setVisible(false);
-        }
-
-        panel.setVisible(true);
-    }
-
-    private void createUIComponents() {
-        jPanel_main = new jPanel_dashboard().getjPanel_dashboard();
     }
 }

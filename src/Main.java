@@ -1,4 +1,7 @@
+import course_registration_system.JPanel_MinistryDashboard.JPanel_dashboard;
 import course_registration_system.Login;
+import course_registration_system.MinistryDashboard;
+
 import javax.swing.*;
 
 public class Main {
@@ -7,8 +10,11 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
            @Override
            public void run() {
-               Login loginForm = new Login();
-               loginForm.setVisible(true);
+//               Login loginForm = new Login();
+//               loginForm.setVisible(true);
+               MinistryDashboard ministryDashboard = new MinistryDashboard();
+               ministryDashboard.setVisible(true);
+
            }
        });
     }
