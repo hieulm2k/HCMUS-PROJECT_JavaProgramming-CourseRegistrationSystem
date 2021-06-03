@@ -112,13 +112,14 @@ public class UserDao {
 
         try{
             final String hql = "update Users set permission=:permission, username=:username, password=:password," +
-                    "dob=:dob, gender=:gender, classId=:classId, stdCode=:stdCode where id=:id";
+                    "dob=:dob, gender=:gender, classId=:classId, stdCode=:stdCode, name=:name where id=:id";
             Query query = session.createQuery(hql);
 
             query.setParameter("id", users.getId());
             query.setParameter("permission", users.getPermission());
             query.setParameter("username", users.getUsername());
             query.setParameter("password", users.getPassword());
+            query.setParameter("name", users.getName());
             query.setParameter("dob", users.getDob());
             query.setParameter("gender", users.getGender());
             query.setParameter("classId", users.getClassId());

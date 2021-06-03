@@ -3,6 +3,7 @@ package course_registration_system;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_dashboard;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_myAccount;
+import pojo.Users;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -28,7 +29,7 @@ public class MinistryDashboard extends JFrame {
     private JLabel jLabel_menuItem10;
     private JLabel jLabel_menuItem9;
     private JLabel jLabel_menuItem11;
-
+    private Users users;
     // default border for the menu items
     Border defaultBorder = BorderFactory.createMatteBorder(0,0,0,0, new Color(46,49,49));
 
@@ -38,12 +39,14 @@ public class MinistryDashboard extends JFrame {
     // create array of jlabels
     JLabel[] menuLabels = new JLabel[11];
 
-    public MinistryDashboard(){
+    public MinistryDashboard(Users user){
         add(jPanel_root);
         setTitle("Ministry Dashboard");
         setSize(1280,720);
         setResizable(false);
         setLocationRelativeTo(null);
+
+        users = user;
 
         // set borders
         // panel logo border
@@ -112,7 +115,7 @@ public class MinistryDashboard extends JFrame {
 
                         break;
                     case "My Account":
-                        showPanel(new JPanel_myAccount().getjPanel_myAcount());
+                        showPanel(new JPanel_myAccount(users).getjPanel_myAcount());
                         break;
                     case "Log Out":
                         dispose();

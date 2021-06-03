@@ -32,7 +32,7 @@ public class Login extends JFrame
                     String password = new String(txtPassword.getPassword());
 
                     if(username.equals("") || password.equals("")){
-                        JOptionPane.showMessageDialog(null, "Your input field cannot blank!");
+                        JOptionPane.showMessageDialog(null, "Your input field cannot empty!");
                     }
                     else {
                         Users user = UserDao.getByUsername(username);
@@ -40,7 +40,7 @@ public class Login extends JFrame
                         if(correctPassword.equals(password)){
                             dispose();
                             if(user.getPermission() == 1) {
-                                MinistryDashboard ministryDashboard = new MinistryDashboard();
+                                MinistryDashboard ministryDashboard = new MinistryDashboard(user);
                                 ministryDashboard.setVisible(true);
                             }
                         }

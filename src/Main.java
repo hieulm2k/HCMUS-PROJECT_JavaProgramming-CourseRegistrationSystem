@@ -10,11 +10,8 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
            @Override
            public void run() {
-//               Login loginForm = new Login();
-//               loginForm.setVisible(true);
-               MinistryDashboard ministryDashboard = new MinistryDashboard();
-               ministryDashboard.setVisible(true);
-
+               Login loginForm = new Login();
+               loginForm.setVisible(true);
            }
        });
     }
