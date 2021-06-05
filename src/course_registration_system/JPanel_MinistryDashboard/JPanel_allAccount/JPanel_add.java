@@ -5,6 +5,7 @@ import dao.UserDao;
 import pojo.Users;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,8 +25,10 @@ public class JPanel_add extends JFrame {
     private JPasswordField confirmPasswordField;
     private JCheckBox showPasswordCheckBox;
     JDateChooser dateChooser = new JDateChooser();
+    private DefaultTableModel model;
 
-    public JPanel_add() {
+    public JPanel_add(DefaultTableModel m) {
+        model = m;
         add(JPanel_root);
         setTitle("Add Ministry Account");
         setSize(490, 350);
@@ -85,6 +88,12 @@ public class JPanel_add extends JFrame {
         java.sql.Date date = java.sql.Date.valueOf(getDate());
         users.setDob(date);
 
+        Object[] o = new Object[4];
+        o[0] = users.getUsername();
+        o[1] = users.getName();
+        o[2] = (users.getGender() == 1 ? "Male" : "Female");
+        o[3] = users.getDob().toString();
+        model.addRow(o);
         UserDao.save(users);
     }
 

@@ -7,6 +7,7 @@ import dao.UserDao;
 import pojo.Users;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -44,6 +45,7 @@ public class AllAccount {
                         String username = table_allAccount.getValueAt(table_allAccount.getSelectedRow(),0).toString();
                         Users users = UserDao.getByUsername(username);
                         UserDao.delete(users);
+                        model.removeRow(table_allAccount.getSelectedRow());
                         model.fireTableDataChanged();
                         JOptionPane.showMessageDialog(null, "Delete success!");
                     }
@@ -62,7 +64,7 @@ public class AllAccount {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                JPanel_add jPanel_add = new JPanel_add();
+                JPanel_add jPanel_add = new JPanel_add(model);
                 jPanel_add.setVisible(true);
             }
         });
@@ -75,7 +77,7 @@ public class AllAccount {
                     if(table_allAccount.getSelectedRow() != -1){
                         String username = table_allAccount.getValueAt(table_allAccount.getSelectedRow(),0).toString();
                         Users users = UserDao.getByUsername(username);
-                        JPanel_edit edit = new JPanel_edit(users);
+                        JPanel_edit edit = new JPanel_edit(users, model, table_allAccount.getSelectedRow());
                         edit.setVisible(true);
                     }
                     else{

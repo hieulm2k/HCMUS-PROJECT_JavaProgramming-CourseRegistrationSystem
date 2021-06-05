@@ -5,6 +5,7 @@ import dao.UserDao;
 import pojo.Users;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,9 +23,14 @@ public class JPanel_edit extends JFrame{
     private JPanel jPanel_root;
     JDateChooser dateChooser = new JDateChooser();
     private  Users users;
+    private DefaultTableModel model;
+    private int row;
 
-    public JPanel_edit(Users u){
+    public JPanel_edit(Users u, DefaultTableModel m, int selectedRow){
         users = u;
+        model = m;
+        row = selectedRow;
+
         add(jPanel_root);
         setTitle("Edit Ministry Account");
         setSize(490, 310);
@@ -63,6 +69,12 @@ public class JPanel_edit extends JFrame{
         users.setGender((byte) (comboBox_gender.getSelectedItem().equals("Male")?1:0));
         java.sql.Date date = java.sql.Date.valueOf(getDate());
         users.setDob(date);
+
+        model.setValueAt(users.getUsername(),row,0);
+        model.setValueAt(users.getName(),row,1);
+        model.setValueAt(comboBox_gender.getSelectedItem(),row,2);
+        model.setValueAt(getDate(),row,3);
+
         UserDao.update(users);
     }
 
