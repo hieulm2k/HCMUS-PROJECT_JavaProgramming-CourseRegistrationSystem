@@ -2,7 +2,8 @@ package course_registration_system;
 
 import course_registration_system.JPanel_MinistryDashboard.AllAccount;
 import course_registration_system.JPanel_MinistryDashboard.Dashboard;
-import course_registration_system.JPanel_MinistryDashboard.myAccount;
+import course_registration_system.JPanel_MinistryDashboard.MyAccount;
+import course_registration_system.JPanel_MinistryDashboard.AllSubject;
 import pojo.Users;
 
 import javax.swing.*;
@@ -95,6 +96,7 @@ public class MinistryDashboard extends JFrame {
                         showPanel(new AllAccount(users).getjPanel_allAccount());
                         break;
                     case "Subject":
+                        showPanel(new AllSubject().getjPanel_subject());
                         break;
                     case "Semester":
 
@@ -115,7 +117,7 @@ public class MinistryDashboard extends JFrame {
 
                         break;
                     case "My Account":
-                        showPanel(new myAccount(users).getjPanel_myAcount());
+                        showPanel(new MyAccount(users).getjPanel_myAcount());
                         break;
                     case "Log Out":
                         dispose();

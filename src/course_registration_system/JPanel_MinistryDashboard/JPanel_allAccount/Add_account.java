@@ -14,68 +14,87 @@ import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class JPanel_edit extends JFrame{
-    private JComboBox comboBox_gender;
-    private JTextField textField_name;
+public class Add_account extends JFrame {
+    private JButton saveButton;
+    private JPanel JPanel_root;
     private JTextField textField_username;
     private JPanel jPanel_dob;
-    private JButton saveButton;
-    private JPanel jPanel_root;
+    private JComboBox comboBox_gender;
+    private JTextField textField_name;
+    private JPasswordField passwordField;
+    private JPasswordField confirmPasswordField;
+    private JCheckBox showPasswordCheckBox;
     JDateChooser dateChooser = new JDateChooser();
-    private  Users users;
     private DefaultTableModel model;
-    private int row;
 
-    public JPanel_edit(Users u, DefaultTableModel m, int selectedRow){
-        users = u;
+    public Add_account(DefaultTableModel m) {
         model = m;
-        row = selectedRow;
-
-        add(jPanel_root);
-        setTitle("Edit Ministry Account");
-        setSize(490, 310);
+        add(JPanel_root);
+        setTitle("Add Ministry Account");
+        setSize(490, 350);
         setResizable(false);
         setLocationRelativeTo(null);
-
         loadComboboxGender();
         loadDateTimePicker();
-        setDate(users.getDob());
-        textField_name.setText(users.getName());
-        textField_username.setText(users.getUsername());
+        setDate(new Date());
 
         saveButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if(!checkEmptyField()){
-                    if(!users.getUsername().equals(textField_username.getText()) && checkExistsUsername()) {
-                        JOptionPane.showMessageDialog(null, "This username is already exists, please try again!");
-                        return;
+                    if(!checkExistsUsername()){
+                        if(passwordField.getText().equals(confirmPasswordField.getText())){
+                            saveAccount();
+                            JOptionPane.showMessageDialog(null, "Add success!");
+                            dispose();
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(null, "The confirm password confirmation does not match!");
+                        }
                     }
-                    updateAccount();
-                    JOptionPane.showMessageDialog(null, "Edit success!");
-                    dispose();
+                    else {
+                        JOptionPane.showMessageDialog(null, "This username is already exists, please try again!");
+                    }
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Some fields is empty, please try again!");
                 }
             }
         });
+
+        showPasswordCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(showPasswordCheckBox.isSelected()){
+                    passwordField.setEchoChar((char)0);
+                    confirmPasswordField.setEchoChar((char)0);
+                }else {
+                    passwordField.setEchoChar('•');
+                    confirmPasswordField.setEchoChar('•');
+                }
+            }
+        });
     }
 
-    public void updateAccount(){
+    public void saveAccount(){
+        Users users = new Users();
         users.setUsername(textField_username.getText());
         users.setName(textField_name.getText());
+        users.setPassword(passwordField.getText());
+        users.setPermission((byte) 1);
         users.setGender((byte) (comboBox_gender.getSelectedItem().equals("Male")?1:0));
+        users.setClassId(1);
         java.sql.Date date = java.sql.Date.valueOf(getDate());
         users.setDob(date);
 
-        model.setValueAt(users.getUsername(),row,0);
-        model.setValueAt(users.getName(),row,1);
-        model.setValueAt(comboBox_gender.getSelectedItem(),row,2);
-        model.setValueAt(getDate(),row,3);
-
-        UserDao.update(users);
+        Object[] o = new Object[4];
+        o[0] = users.getUsername();
+        o[1] = users.getName();
+        o[2] = (users.getGender() == 1 ? "Male" : "Female");
+        o[3] = users.getDob().toString();
+        model.addRow(o);
+        UserDao.save(users);
     }
 
     public boolean checkExistsUsername(){
@@ -85,7 +104,8 @@ public class JPanel_edit extends JFrame{
     }
 
     public boolean checkEmptyField(){
-        if(!textField_username.getText().equals("") && !textField_name.getText().equals("") && dateChooser.getDate()!=null) return false;
+        if(!textField_username.getText().equals("") && !textField_name.getText().equals("") && !passwordField.getText().equals("")
+                && !confirmPasswordField.equals("") && dateChooser.getDate()!=null) return false;
 
         return true;
     }
@@ -93,7 +113,6 @@ public class JPanel_edit extends JFrame{
     public void loadComboboxGender(){
         comboBox_gender.addItem("Male");
         comboBox_gender.addItem("Female");
-        comboBox_gender.setSelectedItem(users.getGender()==1?"Male":"Female");
     }
 
     public void loadDateTimePicker(){

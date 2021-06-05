@@ -46,6 +46,25 @@ public class SubjectDao {
         return subjects;
     }
 
+    public static Subjects getByCode(String Code) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Subjects subjects = null;
+
+        try{
+            final String hql = "select sb from Subjects sb where sb.code =:code";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("code", Code);
+
+            subjects = (Subjects) query.list().get(0);
+        } catch (HibernateException e) {
+            System.out.println(e);
+        } finally {
+            session.close();
+        }
+        return subjects;
+    }
+
     public static void delete(Subjects subjects) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();

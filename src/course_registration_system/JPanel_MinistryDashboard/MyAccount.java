@@ -14,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class myAccount {
+public class MyAccount {
     private JPanel jPanel_myAcount;
     private JTextField textField_name;
     private JButton button_edit;
@@ -33,7 +33,7 @@ public class myAccount {
     private JCheckBox showPasswordCheckBox;
     JDateChooser dateChooser = new JDateChooser();
 
-    public myAccount(Users users) {
+    public MyAccount(Users users) {
         loadDateTimePicker();
         loadComboboxGender();
         setDate(users.getDob());

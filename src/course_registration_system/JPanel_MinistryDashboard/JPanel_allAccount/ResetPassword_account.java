@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class JPanel_resetPassword extends JFrame{
+public class ResetPassword_account extends JFrame{
     private JPanel jPanel_root;
     private JPasswordField confirmPasswordField;
     private JPasswordField passwordField;
@@ -17,7 +17,7 @@ public class JPanel_resetPassword extends JFrame{
     private JButton saveButton;
     private Users users;
 
-    public JPanel_resetPassword(Users u) {
+    public ResetPassword_account(Users u) {
         users = u;
         add(jPanel_root);
         setTitle("Add Ministry Account");

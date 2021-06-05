@@ -1,16 +1,14 @@
 package course_registration_system.JPanel_MinistryDashboard;
 
-import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.JPanel_add;
-import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.JPanel_edit;
-import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.JPanel_resetPassword;
+import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.Add_account;
+import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.Delete_account;
+import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.ResetPassword_account;
 import dao.UserDao;
 import pojo.Users;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -46,7 +44,6 @@ public class AllAccount {
                         Users users = UserDao.getByUsername(username);
                         UserDao.delete(users);
                         model.removeRow(table_allAccount.getSelectedRow());
-                        model.fireTableDataChanged();
                         JOptionPane.showMessageDialog(null, "Delete success!");
                     }
                     else{
@@ -64,7 +61,7 @@ public class AllAccount {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                JPanel_add jPanel_add = new JPanel_add(model);
+                Add_account jPanel_add = new Add_account(model);
                 jPanel_add.setVisible(true);
             }
         });
@@ -77,7 +74,7 @@ public class AllAccount {
                     if(table_allAccount.getSelectedRow() != -1){
                         String username = table_allAccount.getValueAt(table_allAccount.getSelectedRow(),0).toString();
                         Users users = UserDao.getByUsername(username);
-                        JPanel_edit edit = new JPanel_edit(users, model, table_allAccount.getSelectedRow());
+                        Delete_account edit = new Delete_account(users, model, table_allAccount.getSelectedRow());
                         edit.setVisible(true);
                     }
                     else{
@@ -98,7 +95,7 @@ public class AllAccount {
                     if(table_allAccount.getSelectedRow() != -1){
                         String username = table_allAccount.getValueAt(table_allAccount.getSelectedRow(),0).toString();
                         Users users = UserDao.getByUsername(username);
-                        JPanel_resetPassword reset = new JPanel_resetPassword(users);
+                        ResetPassword_account reset = new ResetPassword_account(users);
                         reset.setVisible(true);
                     }
                     else{
