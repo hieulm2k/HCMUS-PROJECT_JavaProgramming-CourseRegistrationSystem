@@ -1,9 +1,6 @@
 package course_registration_system;
 
-import course_registration_system.JPanel_MinistryDashboard.AllAccount;
-import course_registration_system.JPanel_MinistryDashboard.Dashboard;
-import course_registration_system.JPanel_MinistryDashboard.MyAccount;
-import course_registration_system.JPanel_MinistryDashboard.AllSubject;
+import course_registration_system.JPanel_MinistryDashboard.*;
 import pojo.Users;
 
 import javax.swing.*;
@@ -99,7 +96,7 @@ public class MinistryDashboard extends JFrame {
                         showPanel(new AllSubject().getjPanel_subject());
                         break;
                     case "Semester":
-
+                        showPanel(new AllSemester().getjPanel_semester());
                         break;
                     case "Class":
 
