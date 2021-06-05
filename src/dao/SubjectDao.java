@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import pojo.Subjects;
+import pojo.Users;
 import util.HibernateUtil;
 
 import java.util.List;
@@ -56,7 +57,12 @@ public class SubjectDao {
             Query query = session.createQuery(hql);
             query.setParameter("code", Code);
 
-            subjects = (Subjects) query.list().get(0);
+            if(query.list().stream().count()>0){
+                subjects = (Subjects) query.list().get(0);
+            }
+            else{
+                subjects = null;
+            }
         } catch (HibernateException e) {
             System.out.println(e);
         } finally {

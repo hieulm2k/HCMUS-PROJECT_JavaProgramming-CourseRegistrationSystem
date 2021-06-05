@@ -56,8 +56,8 @@ public class AllSubject {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-//                Add_subject add_subject = new Add_subject(model);
-//                add_subject.setVisible(true);
+                Add_subject add_subject = new Add_subject(model);
+                add_subject.setVisible(true);
             }
         });
 

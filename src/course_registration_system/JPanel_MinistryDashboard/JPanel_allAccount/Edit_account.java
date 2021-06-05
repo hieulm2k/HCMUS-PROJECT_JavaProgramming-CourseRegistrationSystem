@@ -14,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Delete_account extends JFrame{
+public class Edit_account extends JFrame{
     private JComboBox comboBox_gender;
     private JTextField textField_name;
     private JTextField textField_username;
@@ -26,7 +26,7 @@ public class Delete_account extends JFrame{
     private DefaultTableModel model;
     private int row;
 
-    public Delete_account(Users u, DefaultTableModel m, int selectedRow){
+    public Edit_account(Users u, DefaultTableModel m, int selectedRow){
         users = u;
         model = m;
         row = selectedRow;

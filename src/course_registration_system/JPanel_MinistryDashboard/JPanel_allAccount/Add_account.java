@@ -16,7 +16,7 @@ import java.util.Date;
 
 public class Add_account extends JFrame {
     private JButton saveButton;
-    private JPanel JPanel_root;
+    private JPanel jPanel_root;
     private JTextField textField_username;
     private JPanel jPanel_dob;
     private JComboBox comboBox_gender;
@@ -29,7 +29,7 @@ public class Add_account extends JFrame {
 
     public Add_account(DefaultTableModel m) {
         model = m;
-        add(JPanel_root);
+        add(jPanel_root);
         setTitle("Add Ministry Account");
         setSize(490, 350);
         setResizable(false);

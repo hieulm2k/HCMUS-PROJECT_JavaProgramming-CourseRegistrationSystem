@@ -1,7 +1,7 @@
 package course_registration_system.JPanel_MinistryDashboard;
 
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.Add_account;
-import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.Delete_account;
+import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.Edit_account;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.ResetPassword_account;
 import dao.UserDao;
 import pojo.Users;
@@ -74,7 +74,7 @@ public class AllAccount {
                     if(table_allAccount.getSelectedRow() != -1){
                         String username = table_allAccount.getValueAt(table_allAccount.getSelectedRow(),0).toString();
                         Users users = UserDao.getByUsername(username);
-                        Delete_account edit = new Delete_account(users, model, table_allAccount.getSelectedRow());
+                        Edit_account edit = new Edit_account(users, model, table_allAccount.getSelectedRow());
                         edit.setVisible(true);
                     }
                     else{
