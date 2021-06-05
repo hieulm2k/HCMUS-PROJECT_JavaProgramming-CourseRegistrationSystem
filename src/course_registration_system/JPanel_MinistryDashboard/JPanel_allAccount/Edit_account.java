@@ -22,7 +22,7 @@ public class Edit_account extends JFrame{
     private JButton saveButton;
     private JPanel jPanel_root;
     JDateChooser dateChooser = new JDateChooser();
-    private  Users users;
+    private Users users;
     private DefaultTableModel model;
     private int row;
 

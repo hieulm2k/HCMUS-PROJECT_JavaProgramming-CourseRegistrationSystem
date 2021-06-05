@@ -68,9 +68,9 @@ public class AllSubject {
                 if(table_subject.getRowCount() > 0){
                     if(table_subject.getSelectedRow() != -1){
                         String code = table_subject.getValueAt(table_subject.getSelectedRow(),0).toString();
-//                        Subjects subjects = SubjectDao.getByCode(code);
-//                        Edit_subject edit = new Edit_subject(users, model, table_subject.getSelectedRow());
-//                        edit.setVisible(true);
+                        Subjects subjects = SubjectDao.getByCode(code);
+                        Edit_subject edit = new Edit_subject(subjects, model, table_subject.getSelectedRow());
+                        edit.setVisible(true);
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "Please select a row to edit!");
