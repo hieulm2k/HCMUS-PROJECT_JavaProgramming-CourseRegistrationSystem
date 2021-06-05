@@ -5,7 +5,6 @@ import pojo.ClassCourse;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import pojo.Classes;
 import util.HibernateUtil;
 import java.util.List;
 

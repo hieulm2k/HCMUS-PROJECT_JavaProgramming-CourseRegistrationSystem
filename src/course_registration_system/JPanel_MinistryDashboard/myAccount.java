@@ -11,14 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class JPanel_myAccount {
+public class myAccount {
     private JPanel jPanel_myAcount;
     private JTextField textField_name;
     private JButton button_edit;
@@ -37,14 +33,14 @@ public class JPanel_myAccount {
     private JCheckBox showPasswordCheckBox;
     JDateChooser dateChooser = new JDateChooser();
 
-    public JPanel_myAccount(Users user) {
+    public myAccount(Users users) {
         loadDateTimePicker();
         loadComboboxGender();
-        setDate(user.getDob());
+        setDate(users.getDob());
 
-        textField_name.setText(user.getName());
-        comboBox_gender.setSelectedItem((user.getGender() == 1)?"Male":"Female");
-        textField_username.setText(user.getUsername());
+        textField_name.setText(users.getName());
+        comboBox_gender.setSelectedItem((users.getGender() == 1)?"Male":"Female");
+        textField_username.setText(users.getUsername());
 
         button_edit.addMouseListener(new MouseAdapter() {
             @Override
@@ -55,7 +51,7 @@ public class JPanel_myAccount {
                     setEnabled(true);
                 }
                 else {
-                    updateUser(user);
+                    updateUser(users);
                 }
             }
         });
@@ -69,7 +65,7 @@ public class JPanel_myAccount {
                     setVisible(true);
                 }
                 else{
-                    savePassword(user);
+                    savePassword(users);
                 }
             }
         });
@@ -92,30 +88,30 @@ public class JPanel_myAccount {
         return jPanel_myAcount;
     }
 
-    public void updateUser(Users user){
+    public void updateUser(Users users){
         if(!textField_name.getText().equals("") && dateChooser.getDate()!=null && !textField_username.getText().equals("")) {
             java.sql.Date date = java.sql.Date.valueOf(getDate());
-            user.setName(textField_name.getText());
-            user.setGender((byte) (comboBox_gender.getSelectedItem().toString().equals("Male") ? 1 : 0));
-            user.setDob(date);
+            users.setName(textField_name.getText());
+            users.setGender((byte) (comboBox_gender.getSelectedItem().toString().equals("Male") ? 1 : 0));
+            users.setDob(date);
 
             // check if username is exists
-            if(!user.getUsername().equals(textField_username.getText())){
-                Users userCheck = UserDao.getByUsername(textField_username.getText());
-                if(userCheck != null){
+            if(!users.getUsername().equals(textField_username.getText())){
+                Users usersCheck = UserDao.getByUsername(textField_username.getText());
+                if(usersCheck != null){
                     JOptionPane.showMessageDialog(null, "This username is already exists, please try again!");
                     return;
                 }
-                user.setUsername(textField_username.getText());
+                users.setUsername(textField_username.getText());
             }
 
-            UserDao.update(user);
+            UserDao.update(users);
             JOptionPane.showMessageDialog(null, "Success!");
             button_edit.setText("Edit");
             setEnabled(false);
         }
         else {
-            JOptionPane.showMessageDialog(null, "Some field is empty, please try again!");
+            JOptionPane.showMessageDialog(null, "Some fields is empty, please try again!");
         }
     }
 
@@ -147,16 +143,16 @@ public class JPanel_myAccount {
         button_edit.setVisible(!isVisible);
     }
 
-    public void savePassword(Users user){
+    public void savePassword(Users users){
         if(!textField_newPassword.getText().equals("") && !textField_confirmPassword.getText().equals("")) {
             // check if confirm password is correct
             if(!textField_confirmPassword.getText().equals(textField_newPassword.getText())){
                 JOptionPane.showMessageDialog(null, "The confirm password confirmation does not match!");
                 return;
             }
-            user.setPassword(textField_newPassword.getText());
+            users.setPassword(textField_newPassword.getText());
 
-            UserDao.update(user);
+            UserDao.update(users);
             JOptionPane.showMessageDialog(null, "Success!");
 
             button_changePassword.setText("Change password");

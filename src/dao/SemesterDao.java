@@ -29,7 +29,7 @@ public class SemesterDao {
 
     public static Semesters getById(int Id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Semesters semesters  = null;
+        Semesters semesters = null;
 
         try{
             final String hql = "select se from Semesters se where se.id =:id";

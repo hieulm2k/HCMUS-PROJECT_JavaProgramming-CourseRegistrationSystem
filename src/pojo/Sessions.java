@@ -8,7 +8,7 @@ public class Sessions {
     private int semesterId;
     private Timestamp start;
     private Timestamp end;
-    private  Semesters semesters;
+    private Semesters semesters;
 
     public Semesters getSemesters() {
         return semesters;

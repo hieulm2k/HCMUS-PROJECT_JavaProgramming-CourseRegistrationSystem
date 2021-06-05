@@ -1,7 +1,6 @@
 package dao;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import pojo.Sessions;
@@ -11,7 +10,7 @@ import java.util.List;
 
 public class SessionDao {
     public static List<Sessions> getAll(){
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession();
         List<Sessions> sessions = null;
 
         try{
@@ -28,7 +27,7 @@ public class SessionDao {
     }
 
     public static Sessions getById(int Id) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession();
         Sessions sessions  = null;
 
         try{
@@ -47,7 +46,7 @@ public class SessionDao {
     }
 
     public static void delete(Sessions sessions) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
         try{
@@ -70,7 +69,7 @@ public class SessionDao {
     }
 
     public static void save(Sessions sessions) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
         try{
@@ -87,7 +86,7 @@ public class SessionDao {
     }
 
     public static void update(Sessions sessions) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
         try{

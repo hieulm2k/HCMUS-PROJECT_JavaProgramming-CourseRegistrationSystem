@@ -29,7 +29,7 @@ public class SubjectDao {
 
     public static Subjects getById(int Id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Subjects subjects  = null;
+        Subjects subjects = null;
 
         try{
             final String hql = "select sb from Subjects sb where sb.id =:id";

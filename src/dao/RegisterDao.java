@@ -29,7 +29,7 @@ public class RegisterDao {
 
     public static Registers getById(int Id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Registers registers  = null;
+        Registers registers = null;
 
         try{
             final String hql = "select reg from Registers reg where reg.id =:id";

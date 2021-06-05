@@ -13,8 +13,8 @@ public class Courses {
     private int weekDay;
     private int timeCase;
     private int maxSlot;
-    private  Semesters semesters;
-    private  Subjects subjects;
+    private Semesters semesters;
+    private Subjects subjects;
     private Set<ClassCourse> classCourseSet = new HashSet<ClassCourse>(0);
     private Set<Registers> registersSet = new HashSet<Registers>(0);
 

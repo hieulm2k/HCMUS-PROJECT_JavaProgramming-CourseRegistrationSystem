@@ -1,8 +1,8 @@
 package course_registration_system;
 
-import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount;
-import course_registration_system.JPanel_MinistryDashboard.JPanel_dashboard;
-import course_registration_system.JPanel_MinistryDashboard.JPanel_myAccount;
+import course_registration_system.JPanel_MinistryDashboard.AllAccount;
+import course_registration_system.JPanel_MinistryDashboard.Dashboard;
+import course_registration_system.JPanel_MinistryDashboard.myAccount;
 import pojo.Users;
 
 import javax.swing.*;
@@ -39,14 +39,14 @@ public class MinistryDashboard extends JFrame {
     // create array of jlabels
     JLabel[] menuLabels = new JLabel[11];
 
-    public MinistryDashboard(Users user){
+    public MinistryDashboard(Users users){
         add(jPanel_root);
         setTitle("Ministry Dashboard");
         setSize(1280,720);
         setResizable(false);
         setLocationRelativeTo(null);
 
-        users = user;
+        this.users = users;
 
         // set borders
         // panel logo border
@@ -66,7 +66,7 @@ public class MinistryDashboard extends JFrame {
         menuLabels[9] = jLabel_menuItem10;
         menuLabels[10] = jLabel_menuItem11;
 
-        jPanel_main.add(new JPanel_dashboard().getjPanel_dashboard());
+        jPanel_main.add(new Dashboard().getjPanel_dashboard());
 
         addActionToMenuLabels();
     }
@@ -89,10 +89,10 @@ public class MinistryDashboard extends JFrame {
                 setLabelBackground(label, menuLabels);
                 switch (label.getText().trim()){
                     case "Dashboard":
-                        showPanel(new JPanel_dashboard().getjPanel_dashboard());
+                        showPanel(new Dashboard().getjPanel_dashboard());
                         break;
                     case "All Account":
-                        showPanel(new JPanel_allAccount().getjPanel_allAccount());
+                        showPanel(new AllAccount(users).getjPanel_allAccount());
                         break;
                     case "Subject":
                         break;
@@ -115,7 +115,7 @@ public class MinistryDashboard extends JFrame {
 
                         break;
                     case "My Account":
-                        showPanel(new JPanel_myAccount(users).getjPanel_myAcount());
+                        showPanel(new myAccount(users).getjPanel_myAcount());
                         break;
                     case "Log Out":
                         dispose();

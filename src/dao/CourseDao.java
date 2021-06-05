@@ -4,7 +4,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import pojo.ClassCourse;
 import pojo.Courses;
 import util.HibernateUtil;
 
@@ -13,24 +12,24 @@ import java.util.List;
 public class CourseDao {
     public static List<Courses> getAll(){
         Session session = HibernateUtil.getSessionFactory().openSession();
-        List<Courses> courses = null;
+        List<Courses> cours = null;
 
         try{
             final String hql = "select cl from Courses cl";
             Query query = session.createQuery(hql);
 
-            courses = query.list();
+            cours = query.list();
         } catch (HibernateException e) {
             System.out.println(e);
         } finally {
             session.close();
         }
-        return courses;
+        return cours;
     }
 
     public static Courses getById(int Id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Courses courses  = null;
+        Courses courses = null;
 
         try{
             final String hql = "select c from Courses c where c.id =:id";

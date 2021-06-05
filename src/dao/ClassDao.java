@@ -11,24 +11,24 @@ import java.util.List;
 public class ClassDao {
     public static List<Classes> getAll(){
         Session session = HibernateUtil.getSessionFactory().openSession();
-        List<Classes> classes = null;
+        List<Classes> aClasses = null;
 
         try{
             final String hql = "select cl from Classes cl";
             Query query = session.createQuery(hql);
 
-            classes = query.list();
+            aClasses = query.list();
         } catch (HibernateException e) {
             System.out.println(e);
         } finally {
             session.close();
         }
-        return classes;
+        return aClasses;
     }
 
     public static Classes getById(int Id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Classes classes  = null;
+        Classes classes = null;
 
         try{
             final String hql = "select cl from Classes cl where cl.id =:id";
@@ -93,7 +93,7 @@ public class ClassDao {
             final String hql = "update Classes set name=:name where id=:id";
             Query query = session.createQuery(hql);
             query.setParameter("name", classes.getName());
-            query.setParameter("id",classes.getId());
+            query.setParameter("id", classes.getId());
 
             int res = query.executeUpdate();
 

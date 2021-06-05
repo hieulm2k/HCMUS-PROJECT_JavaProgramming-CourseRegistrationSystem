@@ -6,10 +6,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class JPanel_dashboard {
+public class Dashboard {
     private JPanel jPanel_dashboard;
 
-    public JPanel_dashboard() {
+    public Dashboard() {
     }
 
     public JPanel getjPanel_dashboard() {

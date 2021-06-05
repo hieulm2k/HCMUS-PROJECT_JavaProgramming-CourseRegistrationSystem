@@ -1,6 +1,5 @@
-import course_registration_system.JPanel_MinistryDashboard.JPanel_dashboard;
 import course_registration_system.Login;
-import course_registration_system.MinistryDashboard;
+import dao.UserDao;
 
 import javax.swing.*;
 

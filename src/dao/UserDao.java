@@ -1,7 +1,6 @@
 package dao;
 
 import org.hibernate.Transaction;
-import pojo.Subjects;
 import pojo.Users;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -30,7 +29,7 @@ public class UserDao {
 
     public static Users getById(int Id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Users users  = null;
+        Users users = null;
 
         try{
             final String hql = "select u from Users u where u.id =:id";
@@ -49,21 +48,25 @@ public class UserDao {
 
     public static Users getByUsername(String username) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Users user  = null;
+        Users users = null;
 
         try{
             final String hql = "select u from Users u where u.username=:username";
 
             Query query = session.createQuery(hql);
             query.setParameter("username",username);
-
-            user = (Users) query.list().get(0);
+            if(query.list().stream().count()>0){
+                users = (Users) query.list().get(0);
+            }
+            else{
+                users = null;
+            }
         } catch (HibernateException e) {
             System.out.println(e);
         } finally {
             session.close();
         }
-        return user;
+        return users;
     }
 
     public static void delete(Users users) {

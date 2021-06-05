@@ -35,12 +35,12 @@ public class Login extends JFrame
                         JOptionPane.showMessageDialog(null, "Your input field cannot empty!");
                     }
                     else {
-                        Users user = UserDao.getByUsername(username);
-                        String correctPassword = user.getPassword();
+                        Users users = UserDao.getByUsername(username);
+                        String correctPassword = users.getPassword();
                         if(correctPassword.equals(password)){
                             dispose();
-                            if(user.getPermission() == 1) {
-                                MinistryDashboard ministryDashboard = new MinistryDashboard(user);
+                            if(users.getPermission() == 1) {
+                                MinistryDashboard ministryDashboard = new MinistryDashboard(users);
                                 ministryDashboard.setVisible(true);
                             }
                         }
