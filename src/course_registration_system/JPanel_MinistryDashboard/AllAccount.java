@@ -2,6 +2,7 @@ package course_registration_system.JPanel_MinistryDashboard;
 
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.JPanel_add;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.JPanel_edit;
+import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.JPanel_resetPassword;
 import dao.UserDao;
 import pojo.Users;
 
@@ -83,6 +84,27 @@ public class AllAccount {
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Your table is empty, cannot edit!");
+                }
+            }
+        });
+
+        resetPasswordButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if(table_allAccount.getRowCount() > 0){
+                    if(table_allAccount.getSelectedRow() != -1){
+                        String username = table_allAccount.getValueAt(table_allAccount.getSelectedRow(),0).toString();
+                        Users users = UserDao.getByUsername(username);
+                        JPanel_resetPassword reset = new JPanel_resetPassword(users);
+                        reset.setVisible(true);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Please select a row to reset password!");
+                    }
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Your table is empty, cannot reset password!");
                 }
             }
         });
