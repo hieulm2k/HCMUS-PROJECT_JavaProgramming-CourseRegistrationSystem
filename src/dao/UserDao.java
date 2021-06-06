@@ -27,6 +27,40 @@ public class UserDao {
         return users;
     }
 
+    public static List<Users> getAllMinistry(){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Users> users = null;
+
+        try{
+            final String hql = "select u from Users u where u.permission=1";
+            Query query = session.createQuery(hql);
+
+            users = query.list();
+        } catch (HibernateException e) {
+            System.out.println(e);
+        } finally {
+            session.close();
+        }
+        return users;
+    }
+
+    public static List<Users> getAllStudent(){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Users> users = null;
+
+        try{
+            final String hql = "select u from Users u where u.permission=0";
+            Query query = session.createQuery(hql);
+
+            users = query.list();
+        } catch (HibernateException e) {
+            System.out.println(e);
+        } finally {
+            session.close();
+        }
+        return users;
+    }
+
     public static Users getById(int Id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Users users = null;
@@ -57,9 +91,6 @@ public class UserDao {
             query.setParameter("username",username);
             if(query.list().stream().count()>0){
                 users = (Users) query.list().get(0);
-            }
-            else{
-                users = null;
             }
         } catch (HibernateException e) {
             System.out.println(e);
@@ -115,7 +146,7 @@ public class UserDao {
 
         try{
             final String hql = "update Users set permission=:permission, username=:username, password=:password," +
-                    "dob=:dob, gender=:gender, classId=:classId, stdCode=:stdCode, name=:name where id=:id";
+                    "dob=:dob, gender=:gender, classes=:classes, stdCode=:stdCode, name=:name where id=:id";
             Query query = session.createQuery(hql);
 
             query.setParameter("id", users.getId());
@@ -125,7 +156,7 @@ public class UserDao {
             query.setParameter("name", users.getName());
             query.setParameter("dob", users.getDob());
             query.setParameter("gender", users.getGender());
-            query.setParameter("classId", users.getClassId());
+            query.setParameter("classes", users.getClasses());
             query.setParameter("stdCode", users.getStdCode());
 
             int res = query.executeUpdate();

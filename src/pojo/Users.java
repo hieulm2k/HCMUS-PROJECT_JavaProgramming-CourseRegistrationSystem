@@ -13,7 +13,6 @@ public class Users {
     private String name;
     private Date dob;
     private byte gender;
-    private Integer classId;
     private String stdCode;
     private Set<Registers> registersSet = new HashSet<Registers>(0);
     private Classes classes;
@@ -90,14 +89,6 @@ public class Users {
         this.gender = gender;
     }
 
-    public Integer getClassId() {
-        return classId;
-    }
-
-    public void setClassId(Integer classId) {
-        this.classId = classId;
-    }
-
     public String getStdCode() {
         return stdCode;
     }
@@ -111,12 +102,12 @@ public class Users {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Users users = (Users) o;
-        return id == users.id && permission == users.permission && gender == users.gender && Objects.equals(username, users.username) && Objects.equals(password, users.password) && Objects.equals(name, users.name) && Objects.equals(dob, users.dob) && Objects.equals(classId, users.classId) && Objects.equals(stdCode, users.stdCode);
+        return id == users.id && permission == users.permission && gender == users.gender && Objects.equals(username, users.username) && Objects.equals(password, users.password) && Objects.equals(name, users.name) && Objects.equals(dob, users.dob)  && Objects.equals(stdCode, users.stdCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, permission, username, password, name, dob, gender, classId, stdCode);
+        return Objects.hash(id, permission, username, password, name, dob, gender, stdCode);
     }
 
     @Override
@@ -129,7 +120,6 @@ public class Users {
                 ", name='" + name + '\'' +
                 ", dob=" + dob +
                 ", gender=" + gender +
-                ", classId=" + classId +
                 ", stdCode='" + stdCode + '\'' +
                 '}';
     }

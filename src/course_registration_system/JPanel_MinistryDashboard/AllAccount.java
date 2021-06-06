@@ -30,7 +30,7 @@ public class AllAccount {
 
     public AllAccount(Users u) {
         user = u;
-        usersList = UserDao.getAll();
+        usersList = UserDao.getAllMinistry();
         usersList.remove(u);
         createTable();
 

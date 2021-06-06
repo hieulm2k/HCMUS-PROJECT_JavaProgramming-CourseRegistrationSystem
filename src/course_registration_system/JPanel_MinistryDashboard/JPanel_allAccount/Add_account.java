@@ -1,7 +1,9 @@
 package course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount;
 
 import com.toedter.calendar.JDateChooser;
+import dao.ClassDao;
 import dao.UserDao;
+import pojo.Classes;
 import pojo.Users;
 
 import javax.swing.*;
@@ -84,7 +86,8 @@ public class Add_account extends JFrame {
         users.setPassword(passwordField.getText());
         users.setPermission((byte) 1);
         users.setGender((byte) (comboBox_gender.getSelectedItem().equals("Male")?1:0));
-        users.setClassId(1);
+        Classes classes = ClassDao.getById(1);
+        users.setClasses(classes);
         java.sql.Date date = java.sql.Date.valueOf(getDate());
         users.setDob(date);
 

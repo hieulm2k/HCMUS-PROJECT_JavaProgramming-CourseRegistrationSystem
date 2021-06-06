@@ -99,7 +99,7 @@ public class MinistryDashboard extends JFrame {
                         showPanel(new AllSemester().getjPanel_semester());
                         break;
                     case "Class":
-
+                        showPanel(new AllClass().getjPanel_class());
                         break;
                     case "Student":
 

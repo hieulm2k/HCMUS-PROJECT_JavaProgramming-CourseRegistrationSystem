@@ -19,7 +19,6 @@ public class Add_subject extends JFrame {
     private JTextField textField_credit;
     private DefaultTableModel model;
 
-
     public Add_subject(DefaultTableModel m) {
         model = m;
         add(jPanel_root);

@@ -18,9 +18,9 @@
             </key>
             <one-to-many class="pojo.ClassCourse"/>
         </set>
-        <set name="usersSet" inverse="true">
+        <set name="usersSet" inverse="true" lazy="false">
             <key>
-                <column name="Id" sql-type="int" not-null="false"/>
+                <column name="ClassId" sql-type="int" not-null="true"/>
             </key>
             <one-to-many class="pojo.Users"/>
         </set>

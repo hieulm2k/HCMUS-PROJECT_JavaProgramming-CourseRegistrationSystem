@@ -17,7 +17,6 @@ public class Login extends JFrame
 
     public Login()
     {
-        Timer timerUp = null;
         add(rootPane);
         setTitle("Login");
         setSize(400,400);
@@ -50,7 +49,7 @@ public class Login extends JFrame
                     }
                 }
                 catch(Exception exp){
-                    JOptionPane.showMessageDialog(null, "Login fail! This username dose not exist!");
+                    JOptionPane.showMessageDialog(null, "Login fail! This username does not exist!");
                 }
             }
         });

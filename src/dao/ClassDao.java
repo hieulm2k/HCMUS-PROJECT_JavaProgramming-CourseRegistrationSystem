@@ -11,19 +11,19 @@ import java.util.List;
 public class ClassDao {
     public static List<Classes> getAll(){
         Session session = HibernateUtil.getSessionFactory().openSession();
-        List<Classes> aClasses = null;
+        List<Classes> Classes = null;
 
         try{
             final String hql = "select cl from Classes cl";
             Query query = session.createQuery(hql);
 
-            aClasses = query.list();
+            Classes = query.list();
         } catch (HibernateException e) {
             System.out.println(e);
         } finally {
             session.close();
         }
-        return aClasses;
+        return Classes;
     }
 
     public static Classes getById(int Id) {
@@ -37,6 +37,26 @@ public class ClassDao {
             query.setParameter("id", Id);
 
             classes = (Classes) query.list().get(0);
+        } catch (HibernateException e) {
+            System.out.println(e);
+        } finally {
+            session.close();
+        }
+        return classes;
+    }
+
+    public static Classes getByName(String name) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Classes classes = null;
+
+        try{
+            final String hql = "select cl from Classes cl where cl.name =:name";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("name", name);
+            if(query.stream().count() > 0){
+                classes = (Classes) query.list().get(0);
+            }
         } catch (HibernateException e) {
             System.out.println(e);
         } finally {
