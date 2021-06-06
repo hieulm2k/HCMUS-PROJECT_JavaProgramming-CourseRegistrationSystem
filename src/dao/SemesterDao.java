@@ -46,6 +46,48 @@ public class SemesterDao {
         return semesters;
     }
 
+    public static Semesters getByTypeAndYear(int type, String year) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Semesters semesters = null;
+
+        try{
+            final String hql = "select se from Semesters se where se.type =:type and se.schoolYear =:year";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("type",type);
+            query.setParameter("year", year);
+
+            if(query.list().stream().count() > 0) {
+                semesters = (Semesters) query.list().get(0);
+            }
+        } catch (HibernateException e) {
+            System.out.println(e);
+        } finally {
+            session.close();
+        }
+        return semesters;
+    }
+
+    public static Semesters getCurrent() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Semesters semesters = null;
+
+        try{
+            final String hql = "select se from Semesters se where se.isCurrent = 1";
+
+            Query query = session.createQuery(hql);
+
+            if(query.list().stream().count() > 0) {
+                semesters = (Semesters) query.list().get(0);
+            }
+        } catch (HibernateException e) {
+            System.out.println(e);
+        } finally {
+            session.close();
+        }
+        return semesters;
+    }
+
     public static void delete(Semesters semesters) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();

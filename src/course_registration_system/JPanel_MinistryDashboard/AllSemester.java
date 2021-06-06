@@ -1,5 +1,6 @@
 package course_registration_system.JPanel_MinistryDashboard;
 
+import course_registration_system.JPanel_MinistryDashboard.JPanel_allSemester.Add_semester;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allSubject.Add_subject;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allSubject.Edit_subject;
 import dao.SemesterDao;
@@ -56,8 +57,8 @@ public class AllSemester {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-//                Add_subject add_subject = new Add_subject(model);
-//                add_subject.setVisible(true);
+                Add_semester add_semester = new Add_semester(model);
+                add_semester.setVisible(true);
             }
         });
 
@@ -69,15 +70,14 @@ public class AllSemester {
                     if(table_semester.getSelectedRow() != -1){
                         String id = table_semester.getValueAt(table_semester.getSelectedRow(),0).toString();
                         Semesters semesters = SemesterDao.getById(Integer.parseInt(id));
-//                        Edit_subject edit = new Edit_subject(semesters, model, table_semester.getSelectedRow());
-//                        edit.setVisible(true);
+                        setCurrent(semesters, table_semester.getSelectedRow());
                     }
                     else{
-                        JOptionPane.showMessageDialog(null, "Please select a row to edit!");
+                        JOptionPane.showMessageDialog(null, "Please select a semester to set as current!");
                     }
                 }
                 else{
-                    JOptionPane.showMessageDialog(null, "Your table is empty, cannot edit!");
+                    JOptionPane.showMessageDialog(null, "Your table is empty, cannot set as current!");
                 }
             }
         });
@@ -105,5 +105,21 @@ public class AllSemester {
         table_semester.setModel(model);
         table_semester.setFont(new Font("Serif", Font.PLAIN, 18));
         table_semester.setRowHeight(30);
+    }
+
+    public void setCurrent(Semesters semesters, int row){
+        Semesters last = SemesterDao.getCurrent();
+        if(last!=null) {
+            last.setIsCurrent((byte) 0);
+            SemesterDao.update(last);
+        }
+
+        for(int i = 0; i < model.getRowCount(); i++){
+            model.setValueAt("NO",i,5);
+        }
+
+        model.setValueAt("YES", row, 5);
+        semesters.setIsCurrent((byte) 1);
+        SemesterDao.update(semesters);
     }
 }
