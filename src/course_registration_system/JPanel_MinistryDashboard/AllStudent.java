@@ -4,6 +4,7 @@ import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.Add
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.Edit_account;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.ResetPassword_account;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allStudent.Add_student;
+import course_registration_system.JPanel_MinistryDashboard.JPanel_allStudent.Edit_student;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allSubject.Add_subject;
 import dao.UserDao;
 import pojo.Users;
@@ -78,8 +79,8 @@ public class AllStudent {
                     if(table_allStudent.getSelectedRow() != -1){
                         String username = table_allStudent.getValueAt(table_allStudent.getSelectedRow(),0).toString();
                         Users users = UserDao.getByUsername(username);
-//                        Edit_account edit = new Edit_account(users, model, table_allStudent.getSelectedRow());
-//                        edit.setVisible(true);
+                        Edit_student edit = new Edit_student(users, model, table_allStudent.getSelectedRow());
+                        edit.setVisible(true);
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "Please select a row to edit!");
