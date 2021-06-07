@@ -97,7 +97,7 @@
                   <font size="18" style="1"/>
                   <foreground color="-1"/>
                   <opaque value="true"/>
-                  <text value="  All Account"/>
+                  <text value="  Ministry Account"/>
                   <visible value="true"/>
                 </properties>
               </component>
@@ -147,7 +147,7 @@
                   <font size="18" style="1"/>
                   <foreground color="-1"/>
                   <opaque value="true"/>
-                  <text value="  Student"/>
+                  <text value="  Student Account"/>
                 </properties>
               </component>
               <component id="56a82" class="javax.swing.JLabel" binding="jLabel_menuItem6">

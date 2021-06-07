@@ -89,7 +89,7 @@ public class MinistryDashboard extends JFrame {
                     case "Dashboard":
                         showPanel(new Dashboard().getjPanel_dashboard());
                         break;
-                    case "All Account":
+                    case "Ministry Account":
                         showPanel(new AllAccount(users).getjPanel_allAccount());
                         break;
                     case "Subject":
@@ -101,8 +101,8 @@ public class MinistryDashboard extends JFrame {
                     case "Class":
                         showPanel(new AllClass().getjPanel_class());
                         break;
-                    case "Student":
-
+                    case "Student Account":
+                        showPanel(new AllStudent(users).getjPanel_student());
                         break;
                     case "Session":
 

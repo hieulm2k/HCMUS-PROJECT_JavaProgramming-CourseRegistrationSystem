@@ -100,6 +100,26 @@ public class UserDao {
         return users;
     }
 
+    public static Users getByStdCode(String stdCode) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Users users = null;
+
+        try{
+            final String hql = "select u from Users u where u.stdCode=:stdCode";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("stdCode",stdCode);
+            if(query.list().stream().count()>0){
+                users = (Users) query.list().get(0);
+            }
+        } catch (HibernateException e) {
+            System.out.println(e);
+        } finally {
+            session.close();
+        }
+        return users;
+    }
+
     public static void delete(Users users) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();

@@ -14,7 +14,7 @@
         </property>
         <property name="username">
             <column name="Username" sql-type="varchar(50)" length="50"/>
-        </property>
+</property>
         <property name="password">
             <column name="Password" sql-type="varchar(255)"/>
         </property>

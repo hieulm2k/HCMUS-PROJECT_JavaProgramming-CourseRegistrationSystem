@@ -27,7 +27,7 @@ public class AllClass {
 
     public AllClass() {
         classesList = ClassDao.getAll();
-        //classesList.remove(classesList.get(0));
+        classesList.remove(classesList.get(0));
         createTable();
 
         deleteButton.addMouseListener(new MouseAdapter() {
