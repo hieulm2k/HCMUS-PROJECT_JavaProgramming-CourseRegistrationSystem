@@ -5,6 +5,7 @@ import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.Edi
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.ResetPassword_account;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allStudent.Add_student;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allStudent.Edit_student;
+import course_registration_system.JPanel_MinistryDashboard.JPanel_allStudent.View_subject;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allSubject.Add_subject;
 import dao.UserDao;
 import pojo.Users;
@@ -109,6 +110,27 @@ public class AllStudent {
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Your table is empty, cannot reset password!");
+                }
+            }
+        });
+
+        vewSubjectButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if(table_allStudent.getRowCount() > 0){
+                    if(table_allStudent.getSelectedRow() != -1){
+                        String username = table_allStudent.getValueAt(table_allStudent.getSelectedRow(),0).toString();
+                        Users users = UserDao.getByUsername(username);
+                        View_subject view_subject = new View_subject(users);
+                        view_subject.setVisible(true);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Please select a row to view subject!");
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Your table is empty, cannot view subject!");
                 }
             }
         });
