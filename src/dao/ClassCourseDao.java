@@ -90,10 +90,10 @@ public class ClassCourseDao {
         Transaction transaction = session.beginTransaction();
 
         try{
-            final String hql = "update ClassCourse set classId=:classid, courseId=:courseid where id=:id";
+            final String hql = "update ClassCourse set classes=:classes, courses=:courses where id=:id";
             Query query = session.createQuery(hql);
-            query.setParameter("classid", classCourse.getClassId());
-            query.setParameter("courseid", classCourse.getCourseId());
+            query.setParameter("classes", classCourse.getClasses());
+            query.setParameter("courses", classCourse.getCourses());
             query.setParameter("id", classCourse.getId());
 
             int res = query.executeUpdate();

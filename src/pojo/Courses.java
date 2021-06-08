@@ -6,8 +6,6 @@ import java.util.Set;
 
 public class Courses {
     private int id;
-    private int semesterId;
-    private int subjectId;
     private String tutorName;
     private String room;
     private int weekDay;
@@ -58,22 +56,6 @@ public class Courses {
         this.id = id;
     }
 
-    public int getSemesterId() {
-        return semesterId;
-    }
-
-    public void setSemesterId(int semesterId) {
-        this.semesterId = semesterId;
-    }
-
-    public int getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(int subjectId) {
-        this.subjectId = subjectId;
-    }
-
     public String getTutorName() {
         return tutorName;
     }
@@ -119,11 +101,11 @@ public class Courses {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Courses courses = (Courses) o;
-        return id == courses.id && semesterId == courses.semesterId && subjectId == courses.subjectId && weekDay == courses.weekDay && timeCase == courses.timeCase && maxSlot == courses.maxSlot && Objects.equals(tutorName, courses.tutorName) && Objects.equals(room, courses.room);
+        return id == courses.id && weekDay == courses.weekDay && timeCase == courses.timeCase && maxSlot == courses.maxSlot && Objects.equals(tutorName, courses.tutorName) && Objects.equals(room, courses.room);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, semesterId, subjectId, tutorName, room, weekDay, timeCase, maxSlot);
+        return Objects.hash(id, tutorName, room, weekDay, timeCase, maxSlot);
     }
 }

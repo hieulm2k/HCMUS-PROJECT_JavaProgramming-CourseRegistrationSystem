@@ -1,13 +1,13 @@
 package pojo;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 public class Sessions {
     private int id;
-    private int semesterId;
-    private Timestamp start;
-    private Timestamp end;
+    private Date start;
+    private Date end;
     private Semesters semesters;
 
     public Semesters getSemesters() {
@@ -26,27 +26,19 @@ public class Sessions {
         this.id = id;
     }
 
-    public int getSemesterId() {
-        return semesterId;
-    }
-
-    public void setSemesterId(int semesterId) {
-        this.semesterId = semesterId;
-    }
-
-    public Timestamp getStart() {
+    public Date getStart() {
         return start;
     }
 
-    public void setStart(Timestamp start) {
+    public void setStart(Date start) {
         this.start = start;
     }
 
-    public Timestamp getEnd() {
+    public Date getEnd() {
         return end;
     }
 
-    public void setEnd(Timestamp end) {
+    public void setEnd(Date end) {
         this.end = end;
     }
 
@@ -55,11 +47,11 @@ public class Sessions {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Sessions sessions = (Sessions) o;
-        return id == sessions.id && semesterId == sessions.semesterId && Objects.equals(start, sessions.start) && Objects.equals(end, sessions.end);
+        return id == sessions.id && Objects.equals(start, sessions.start) && Objects.equals(end, sessions.end);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, semesterId, start, end);
+        return Objects.hash(id, start, end);
     }
 }

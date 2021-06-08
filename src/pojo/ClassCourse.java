@@ -4,8 +4,6 @@ import java.util.Objects;
 
 public class ClassCourse {
     private int id;
-    private int classId;
-    private int courseId;
     private Classes classes;
     private Courses courses;
 
@@ -33,32 +31,16 @@ public class ClassCourse {
         this.courses = courses;
     }
 
-    public int getClassId() {
-        return classId;
-    }
-
-    public void setClassId(int classId) {
-        this.classId = classId;
-    }
-
-    public int getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ClassCourse that = (ClassCourse) o;
-        return id == that.id && classId == that.classId && courseId == that.courseId;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, classId, courseId);
+        return Objects.hash(id);
     }
 }

@@ -5,8 +5,6 @@ import java.util.Objects;
 
 public class Registers {
     private int id;
-    private int studentId;
-    private int courseId;
     private Timestamp time;
     private Users users;
     private Courses courses;
@@ -35,22 +33,6 @@ public class Registers {
         this.id = id;
     }
 
-    public int getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
-    }
-
-    public int getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
-    }
-
     public Timestamp getTime() {
         return time;
     }
@@ -64,11 +46,11 @@ public class Registers {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Registers registers = (Registers) o;
-        return id == registers.id && studentId == registers.studentId && courseId == registers.courseId && Objects.equals(time, registers.time);
+        return id == registers.id && Objects.equals(time, registers.time);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, studentId, courseId, time);
+        return Objects.hash(id, time);
     }
 }

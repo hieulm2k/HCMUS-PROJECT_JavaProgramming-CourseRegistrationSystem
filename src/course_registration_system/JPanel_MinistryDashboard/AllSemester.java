@@ -86,13 +86,13 @@ public class AllSemester {
     private void createTable(){
         model = new DefaultTableModel(
                 null,
-                new String[]{"Id", "Name", "School Year", "Start Date",  "End Date", "Is Current?"}
+                new String[]{"Id", "School Year", "Semester", "Start Date",  "End Date", "Is Current?"}
         );
         for (Semesters semesters : semestersList) {
             Object[] o = new Object[6];
             o[0] = semesters.getId();
-            o[1] = semesters.getType()==1?"HK1":semesters.getType()==2?"HK2":"HK3";
-            o[2] = semesters.getSchoolYear();
+            o[1] = semesters.getSchoolYear();
+            o[2] = semesters.getType()==1?"HK1":semesters.getType()==2?"HK2":"HK3";
             o[3] = semesters.getStartDate();
             o[4] = semesters.getEndDate();
             o[5] = semesters.getIsCurrent()==1?"YES":"NO";
@@ -105,6 +105,8 @@ public class AllSemester {
         table_semester.setModel(model);
         table_semester.setFont(new Font("Serif", Font.PLAIN, 18));
         table_semester.setRowHeight(30);
+        table_semester.getColumnModel().getColumn(0).setMinWidth(0);
+        table_semester.getColumnModel().getColumn(0).setMaxWidth(0);
     }
 
     public void setCurrent(Semesters semesters, int row){

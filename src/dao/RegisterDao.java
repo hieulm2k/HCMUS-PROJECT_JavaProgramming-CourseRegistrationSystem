@@ -91,12 +91,12 @@ public class RegisterDao {
         Transaction transaction = session.beginTransaction();
 
         try{
-            final String hql = "update Registers set studentId=:studentId, courseId=:courseId, time=:time  where id=:id";
+            final String hql = "update Registers set users=:users, courses=:courses, time=:time  where id=:id";
             Query query = session.createQuery(hql);
 
             query.setParameter("id", registers.getId());
-            query.setParameter("studentId", registers.getStudentId());
-            query.setParameter("courseId", registers.getCourseId());
+            query.setParameter("users", registers.getUsers());
+            query.setParameter("courses", registers.getCourses());
             query.setParameter("time", registers.getTime());
 
             int res = query.executeUpdate();

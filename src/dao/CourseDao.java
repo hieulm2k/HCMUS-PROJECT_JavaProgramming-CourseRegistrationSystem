@@ -91,13 +91,13 @@ public class CourseDao {
         Transaction transaction = session.beginTransaction();
 
         try{
-            final String hql = "update Courses set semesterId=:semesterId, subjectId=:subjectId," +
+            final String hql = "update Courses set semesters=:semesters, subjects=:subjects," +
                     "tutorName=:tutorName, room=:room, weekDay=:weekDay, timeCase=:timeCase, maxSlot=:maxSlot  where id=:id";
             Query query = session.createQuery(hql);
 
             query.setParameter("id", courses.getId());
-            query.setParameter("semesterId", courses.getSemesterId());
-            query.setParameter("subjectId", courses.getSubjectId());
+            query.setParameter("semesters", courses.getSemesters());
+            query.setParameter("subjects", courses.getSubjects());
             query.setParameter("tutorName", courses.getTutorName());
             query.setParameter("room", courses.getRoom());
             query.setParameter("weekDay", courses.getWeekDay());

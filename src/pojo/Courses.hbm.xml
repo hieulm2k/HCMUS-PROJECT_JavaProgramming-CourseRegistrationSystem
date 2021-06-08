@@ -9,12 +9,6 @@
             <column name="Id" sql-type="int" not-null="true"/>
             <generator class="increment"></generator>
         </id>
-        <property name="semesterId">
-            <column name="SemesterID" sql-type="int"/>
-        </property>
-        <property name="subjectId">
-            <column name="SubjectID" sql-type="int"/>
-        </property>
         <property name="tutorName">
             <column name="TutorName" sql-type="varchar(45)" length="45"/>
         </property>
@@ -32,21 +26,21 @@
         </property>
         <set name="classCourseSet" inverse="true">
             <key>
-                <column name="Id" sql-type="int" not-null="true"/>
+                <column name="CourseId" sql-type="int" not-null="true"/>
             </key>
             <one-to-many class="pojo.ClassCourse"/>
         </set>
         <set name="registersSet" inverse="true">
             <key>
-                <column name="Id" sql-type="int" not-null="true"/>
+                <column name="CourseId" sql-type="int" not-null="true"/>
             </key>
             <one-to-many class="pojo.Registers"/>
         </set>
-        <many-to-one class="pojo.Semesters" name="semesters" insert="false" update="false" fetch="join" lazy="false" cascade="save-update">
-            <column name="Id" sql-type="int" not-null="true"/>
+        <many-to-one class="pojo.Semesters" name="semesters" fetch="join" lazy="false" cascade="save-update">
+            <column name="SemesterID" sql-type="int" not-null="true"/>
         </many-to-one>
-        <many-to-one class="pojo.Subjects" name="subjects" insert="false" update="false" fetch="join" lazy="false" cascade="save-update">
-            <column name="Id" sql-type="int" not-null="true"/>
+        <many-to-one class="pojo.Subjects" name="subjects" fetch="join" lazy="false" cascade="save-update">
+            <column name="SubjectID" sql-type="int" not-null="true"/>
         </many-to-one>
     </class>
 </hibernate-mapping>

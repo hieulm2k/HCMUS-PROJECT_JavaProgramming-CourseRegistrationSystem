@@ -3,9 +3,11 @@ package dao;
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import pojo.Semesters;
 import pojo.Sessions;
 import util.HibernateUtil;
 
+import java.sql.Date;
 import java.util.List;
 
 public class SessionDao {
@@ -26,6 +28,24 @@ public class SessionDao {
         return sessions;
     }
 
+    public static List<Sessions> getAllOfSemester(Semesters semesters){
+        org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Sessions> sessions = null;
+
+        try{
+            final String hql = "select ses from Sessions ses where ses.semesters=:semesters";
+            Query query = session.createQuery(hql);
+            query.setParameter("semesters", semesters);
+            sessions = query.list();
+        } catch (HibernateException e) {
+            System.out.println(e);
+            sessions = null;
+        } finally {
+            session.close();
+        }
+        return sessions;
+    }
+
     public static Sessions getById(int Id) {
         org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession();
         Sessions sessions  = null;
@@ -37,6 +57,28 @@ public class SessionDao {
             query.setParameter("id", Id);
 
             sessions = (Sessions) query.list().get(0);
+        } catch (HibernateException e) {
+            System.out.println(e);
+        } finally {
+            session.close();
+        }
+        return sessions;
+    }
+
+    public static Sessions getByDate(Date start, Date end) {
+        org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession();
+        Sessions sessions  = null;
+
+        try{
+            final String hql = "select ses from Sessions ses where ses.start=:start and ses.end=:end";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("start",start);
+            query.setParameter("end",end);
+
+            if(query.list().stream().count()>0) {
+                sessions = (Sessions) query.list().get(0);
+            }
         } catch (HibernateException e) {
             System.out.println(e);
         } finally {
@@ -90,11 +132,11 @@ public class SessionDao {
         Transaction transaction = session.beginTransaction();
 
         try{
-            final String hql = "update Sessions set semesterId=:semesterId, start=:start, end=:end where id=:id";
+            final String hql = "update Sessions set semesters=:semesters, start=:start, end=:end where id=:id";
             Query query = session.createQuery(hql);
 
             query.setParameter("id", sessions.getId());
-            query.setParameter("semesterId", sessions.getSemesterId());
+            query.setParameter("semesters", sessions.getSemesters());
             query.setParameter("start", sessions.getStart());
             query.setParameter("end", sessions.getEnd());
 

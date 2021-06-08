@@ -51,6 +51,10 @@ public class Add_semester extends JFrame {
                         if(comboBox_current.getSelectedItem().equals("YES")) {
                             setCurrent();
                         }
+                        if(checkDate()){
+                            JOptionPane.showMessageDialog(null, "End date must greater than start date, please try again!");
+                            return;
+                        }
                         saveSemester();
                         JOptionPane.showMessageDialog(null, "Add success!");
                         dispose();
@@ -97,8 +101,8 @@ public class Add_semester extends JFrame {
 
         Object[] o = new Object[6];
         o[0] = semesters.getId();
-        o[1] = semesters.getType()==1?"HK1":semesters.getType()==2?"HK2":"HK3";
-        o[2] = semesters.getSchoolYear();
+        o[2] = semesters.getType()==1?"HK1":semesters.getType()==2?"HK2":"HK3";
+        o[1] = semesters.getSchoolYear();
         o[3] = semesters.getStartDate();
         o[4] = semesters.getEndDate();
         o[5] = semesters.getIsCurrent()==1?"YES":"NO";
@@ -116,6 +120,13 @@ public class Add_semester extends JFrame {
         if(!textField_schoolYear.getText().equals("") && dateChooserStart.getDate()!=null && dateChooserStart.getDate()!=null) return false;
 
         return true;
+    }
+
+    public boolean checkDate(){
+        if(dateChooserStart.getDate().compareTo(dateChooserEnd.getDate()) >= 0){
+            return true;
+        }
+        return false;
     }
 
     public void loadCombobox(){
