@@ -108,7 +108,7 @@ public class MinistryDashboard extends JFrame {
                         showPanel(new AllSession().getjPanel_session());
                         break;
                     case "Course":
-
+                        showPanel(new AllCourse().getjPanel_allAccount());
                         break;
                     case "Register List":
 

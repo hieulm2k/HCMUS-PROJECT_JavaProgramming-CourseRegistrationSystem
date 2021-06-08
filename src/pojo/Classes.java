@@ -7,7 +7,6 @@ import java.util.Set;
 public class Classes {
     private int id;
     private String name;
-    private Set<ClassCourse> classCourseSet = new HashSet<ClassCourse>(0);
     private Set<Users> usersSet = new HashSet<Users>(0);
 
     public Set<Users> getUsersSet() {
@@ -16,14 +15,6 @@ public class Classes {
 
     public void setUsersSet(Set<Users> usersSet) {
         this.usersSet = usersSet;
-    }
-
-    public Set<ClassCourse> getClassCourseSet() {
-        return classCourseSet;
-    }
-
-    public void setClassCourseSet(Set<ClassCourse> classCourseSet) {
-        this.classCourseSet = classCourseSet;
     }
 
     public int getId() {

@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import pojo.Courses;
+import pojo.Semesters;
 import util.HibernateUtil;
 
 import java.util.List;
@@ -27,6 +28,24 @@ public class CourseDao {
         return cours;
     }
 
+    public static List<Courses> getAllOfSemester(Semesters semesters){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Courses> course = null;
+
+        try{
+            final String hql = "select cl from Courses cl where cl.semesters=:semester";
+            Query query = session.createQuery(hql);
+            query.setParameter("semester", semesters);
+            course = query.list();
+        } catch (HibernateException e) {
+            System.out.println(e);
+            course = null;
+        } finally {
+            session.close();
+        }
+        return course;
+    }
+
     public static Courses getById(int Id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Courses courses = null;
@@ -38,6 +57,50 @@ public class CourseDao {
             query.setParameter("id", Id);
 
             courses = (Courses) query.list().get(0);
+        } catch (HibernateException e) {
+            System.out.println(e);
+        } finally {
+            session.close();
+        }
+        return courses;
+    }
+
+    public static Courses getBySubjectNClass(String subjectName, String classname) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Courses courses = null;
+
+        try{
+            final String hql = "select c from Courses c where c.subjects.name=:subject and c.classes.name=:class";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("subject", subjectName);
+            query.setParameter("class", classname);
+            if(query.list().stream().count()>0){
+                courses = (Courses) query.list().get(0);
+            }
+        } catch (HibernateException e) {
+            System.out.println(e);
+        } finally {
+            session.close();
+        }
+        return courses;
+    }
+
+    public static Courses getByRoomDayTime(String room, int day, int time) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Courses courses = null;
+
+        try{
+            final String hql = "select c from Courses c where c.room=:room and c.weekDay=:day and c.timeCase=:time";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("room", room);
+            query.setParameter("day", day);
+            query.setParameter("time", time);
+
+            if(query.list().stream().count()>0){
+                courses = (Courses) query.list().get(0);
+            }
         } catch (HibernateException e) {
             System.out.println(e);
         } finally {

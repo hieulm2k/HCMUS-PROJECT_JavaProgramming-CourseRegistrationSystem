@@ -13,8 +13,16 @@ public class Courses {
     private int maxSlot;
     private Semesters semesters;
     private Subjects subjects;
-    private Set<ClassCourse> classCourseSet = new HashSet<ClassCourse>(0);
+    private Classes classes;
     private Set<Registers> registersSet = new HashSet<Registers>(0);
+
+    public Classes getClasses() {
+        return classes;
+    }
+
+    public void setClasses(Classes classes) {
+        this.classes = classes;
+    }
 
     public Set<Registers> getRegistersSet() {
         return registersSet;
@@ -22,14 +30,6 @@ public class Courses {
 
     public void setRegistersSet(Set<Registers> registersSet) {
         this.registersSet = registersSet;
-    }
-
-    public Set<ClassCourse> getClassCourseSet() {
-        return classCourseSet;
-    }
-
-    public void setClassCourseSet(Set<ClassCourse> classCourseSet) {
-        this.classCourseSet = classCourseSet;
     }
 
     public Semesters getSemesters() {

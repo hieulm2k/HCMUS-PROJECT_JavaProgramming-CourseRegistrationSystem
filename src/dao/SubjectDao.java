@@ -47,6 +47,27 @@ public class SubjectDao {
         return subjects;
     }
 
+    public static Subjects getByName(String name) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Subjects subjects = null;
+
+        try{
+            final String hql = "select sb from Subjects sb where sb.name=:name";
+
+            Query query = session.createQuery(hql);
+            query.setParameter("name", name);
+
+            if(query.list().stream().count()>0) {
+                subjects = (Subjects) query.list().get(0);
+            }
+        } catch (HibernateException e) {
+            System.out.println(e);
+        } finally {
+            session.close();
+        }
+        return subjects;
+    }
+
     public static Subjects getByCode(String Code) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Subjects subjects = null;

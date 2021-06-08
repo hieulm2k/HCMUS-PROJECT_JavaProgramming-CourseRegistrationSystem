@@ -55,7 +55,7 @@ public class Add_subject extends JFrame {
             return Integer.parseInt(textField_credit.getText());
         }
         catch (NumberFormatException e){
-            JOptionPane.showMessageDialog(null, "Credit field has wrong format or integer, please try again!");
+            JOptionPane.showMessageDialog(null, "Credit field has wrong format of integer, please try again!");
             return -1;
         }
     }
