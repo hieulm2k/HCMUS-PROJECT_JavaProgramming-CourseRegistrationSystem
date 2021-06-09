@@ -42,6 +42,10 @@ public class Login extends JFrame
                                 MinistryDashboard ministryDashboard = new MinistryDashboard(users);
                                 ministryDashboard.setVisible(true);
                             }
+                            else{
+                                StudentDashboard studentDashboard = new StudentDashboard(users);
+                                studentDashboard.setVisible(true);
+                            }
                         }
                         else {
                             JOptionPane.showMessageDialog(null, "Wrong password!");

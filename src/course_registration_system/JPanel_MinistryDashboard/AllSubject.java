@@ -18,6 +18,7 @@ public class AllSubject {
     private JButton editButton;
     private JButton deleteButton;
     private JPanel jPanel_subject;
+    private JButton registerListButton;
     private List<Subjects> subjectsList;
     private DefaultTableModel model;
 

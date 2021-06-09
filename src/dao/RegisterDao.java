@@ -46,6 +46,64 @@ public class RegisterDao {
         return registers;
     }
 
+    public static List<Registers> getByUserNCourse(int userId, int courseId){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Registers> registers = null;
+
+        try{
+            final String hql = "select reg from Registers reg where reg.users.id=:userId and reg.courses.id=:courseId";
+            Query query = session.createQuery(hql);
+            query.setParameter("userId",userId);
+            query.setParameter("courseId",courseId);
+
+            registers = query.list();
+        } catch (HibernateException e) {
+            System.out.println(e);
+            registers = null;
+        } finally {
+            session.close();
+        }
+        return registers;
+    }
+
+    public static List<Registers> getBySubjectId(int id){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Registers> registers = null;
+
+        try{
+            final String hql = "select reg from Registers reg where reg.courses.subjects.id=:id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id",id);
+
+            registers = query.list();
+        } catch (HibernateException e) {
+            System.out.println(e);
+            registers = null;
+        } finally {
+            session.close();
+        }
+        return registers;
+    }
+
+    public static List<Registers> getByCourseId(int id){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Registers> registers = null;
+
+        try{
+            final String hql = "select reg from Registers reg where reg.courses.id=:id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id",id);
+
+            registers = query.list();
+        } catch (HibernateException e) {
+            System.out.println(e);
+            registers = null;
+        } finally {
+            session.close();
+        }
+        return registers;
+    }
+
     public static Registers getById(int Id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Registers registers = null;

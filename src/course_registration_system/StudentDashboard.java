@@ -9,23 +9,18 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class MinistryDashboard extends JFrame {
+public class StudentDashboard extends JFrame{
     private JPanel jPanel_root;
-    private JPanel logo;
     private JPanel jPanel_side;
     private JPanel jPanel_header;
-    private JPanel jPanel_main;
+    private JPanel logo;
     private JPanel jPanel_menu;
     private JLabel jLabel_menuItem1;
     private JLabel jLabel_menuItem2;
-    private JLabel jLabel_menuItem3;
-    private JLabel jLabel_menuItem4;
-    private JLabel jLabel_menuItem5;
-    private JLabel jLabel_menuItem6;
-    private JLabel jLabel_menuItem7;
-    private JLabel jLabel_menuItem10;
     private JLabel jLabel_menuItem9;
+    private JLabel jLabel_menuItem10;
     private JLabel jLabel_menuItem11;
+    private JPanel jPanel_main;
     private Users users;
     // default border for the menu items
     Border defaultBorder = BorderFactory.createMatteBorder(0,0,0,0, new Color(46,49,49));
@@ -34,11 +29,11 @@ public class MinistryDashboard extends JFrame {
     Border yellowBorder = BorderFactory.createMatteBorder(1,0,1,0,Color.YELLOW);
 
     // create array of jlabels
-    JLabel[] menuLabels = new JLabel[10];
+    JLabel[] menuLabels = new JLabel[5];
 
-    public MinistryDashboard(Users users){
+    public StudentDashboard(Users users){
         add(jPanel_root);
-        setTitle("Ministry Dashboard");
+        setTitle("Student Dashboard");
         setSize(1280,720);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -53,14 +48,9 @@ public class MinistryDashboard extends JFrame {
         // populate the menuLabels array
         menuLabels[0] = jLabel_menuItem1;
         menuLabels[1] = jLabel_menuItem2;
-        menuLabels[2] = jLabel_menuItem3;
-        menuLabels[3] = jLabel_menuItem4;
-        menuLabels[4] = jLabel_menuItem5;
-        menuLabels[5] = jLabel_menuItem6;
-        menuLabels[6] = jLabel_menuItem7;
-        menuLabels[7] = jLabel_menuItem9;
-        menuLabels[8] = jLabel_menuItem10;
-        menuLabels[9] = jLabel_menuItem11;
+        menuLabels[2] = jLabel_menuItem9;
+        menuLabels[3] = jLabel_menuItem10;
+        menuLabels[4] = jLabel_menuItem11;
 
         jPanel_main.add(new Dashboard().getjPanel_dashboard());
 
@@ -149,13 +139,13 @@ public class MinistryDashboard extends JFrame {
     private void showPanel(JPanel jPanel) {
 
         SwingUtilities.invokeLater(
-               new Runnable() {
-                   public void run() {
-                       jPanel_main.removeAll();
-                       jPanel_main.add(jPanel);
-                   }
-               }
-       );
+                new Runnable() {
+                    public void run() {
+                        jPanel_main.removeAll();
+                        jPanel_main.add(jPanel);
+                    }
+                }
+        );
     }
 
     public void setLabelBackground(JLabel label, JLabel[] jLabels){

@@ -214,7 +214,7 @@
         </constraints>
         <properties>
           <font size="20" style="1"/>
-          <text value="Dashboard"/>
+          <text value="Ministry Dashboard"/>
         </properties>
       </component>
     </children>

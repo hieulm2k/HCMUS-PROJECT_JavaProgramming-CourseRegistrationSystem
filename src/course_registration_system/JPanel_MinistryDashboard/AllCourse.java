@@ -4,6 +4,7 @@ import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.Add
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.Edit_account;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.ResetPassword_account;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allCourse.Add_course;
+import course_registration_system.JPanel_MinistryDashboard.JPanel_allSubject.View_registerList;
 import dao.CourseDao;
 import dao.SemesterDao;
 import dao.SessionDao;
@@ -29,6 +30,7 @@ public class AllCourse {
     private JPanel jPanel_course;
     private JLabel jLabel_schoolYear;
     private JLabel jlabel_semester;
+    private JButton registerButton;
     private List<Courses> coursesList;
     private DefaultTableModel model;
 
@@ -59,7 +61,6 @@ public class AllCourse {
                 else{
                     JOptionPane.showMessageDialog(null, "Your table is empty, cannot delete!");
                 }
-
             }
         });
 
@@ -69,6 +70,28 @@ public class AllCourse {
                 super.mouseClicked(e);
                 Add_course add_course = new Add_course(model);
                 add_course.setVisible(true);
+            }
+        });
+
+        registerButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if(table_allCourse.getRowCount() > 0){
+                    if(table_allCourse.getSelectedRow() != -1){
+                        String id = table_allCourse.getValueAt(table_allCourse.getSelectedRow(),0).toString();
+                        Courses courses = CourseDao.getById(Integer.parseInt(id));
+                        View_registerList view_registerList = new View_registerList(courses);
+                        view_registerList.setVisible(true);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Please select a course to view register list!");
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Your table is empty, cannot view register list!");
+                }
+
             }
         });
     }
@@ -106,9 +129,9 @@ public class AllCourse {
         table_allCourse.getTableHeader().setOpaque(false);
         table_allCourse.getTableHeader().setBackground(Color.DARK_GRAY);
         table_allCourse.getTableHeader().setForeground(Color.WHITE);
-        table_allCourse.getTableHeader().setFont(new Font("Serif", Font.PLAIN, 18));
+        table_allCourse.getTableHeader().setFont(new Font("Serif", Font.PLAIN, 16));
         table_allCourse.setModel(model);
-        table_allCourse.setFont(new Font("Serif", Font.PLAIN, 18));
+        table_allCourse.setFont(new Font("Serif", Font.PLAIN, 15));
         table_allCourse.setRowHeight(30);
         table_allCourse.getColumnModel().getColumn(0).setMinWidth(0);
         table_allCourse.getColumnModel().getColumn(0).setMaxWidth(0);
