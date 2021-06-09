@@ -73,7 +73,10 @@ public class View_registerList extends JFrame{
                 model.addRow(o);
             }
         }
+        setTable();
+    }
 
+    private void setTable(){
         table_register.getTableHeader().setOpaque(false);
         table_register.getTableHeader().setBackground(Color.DARK_GRAY);
         table_register.getTableHeader().setForeground(Color.WHITE);
@@ -81,6 +84,10 @@ public class View_registerList extends JFrame{
         table_register.setModel(model);
         table_register.setFont(new Font("Serif", Font.PLAIN, 18));
         table_register.setRowHeight(30);
+        table_register.getColumnModel().getColumn(1).setPreferredWidth(150);
+        table_register.getColumnModel().getColumn(3).setPreferredWidth(200);
+        table_register.getColumnModel().getColumn(4).setPreferredWidth(150);
+        table_register.getColumnModel().getColumn(6).setPreferredWidth(170);
     }
 
     private String getTimeCase(int timeCase){
@@ -133,12 +140,11 @@ public class View_registerList extends JFrame{
                     o[6] = registers.getTime();
                     model.addRow(o);
                 }
-                table_register.setModel(model);
             }
             else {
-                table_register.setModel(model);
                 JOptionPane.showMessageDialog(null, "This student has not registered for this course");
             }
+            setTable();
         }
     }
 }

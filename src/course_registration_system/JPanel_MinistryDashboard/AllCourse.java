@@ -135,6 +135,9 @@ public class AllCourse {
         table_allCourse.setRowHeight(30);
         table_allCourse.getColumnModel().getColumn(0).setMinWidth(0);
         table_allCourse.getColumnModel().getColumn(0).setMaxWidth(0);
+        table_allCourse.getColumnModel().getColumn(5).setPreferredWidth(200);
+        table_allCourse.getColumnModel().getColumn(2).setPreferredWidth(200);
+
     }
 
     private String getTimeCase(int timeCase){
