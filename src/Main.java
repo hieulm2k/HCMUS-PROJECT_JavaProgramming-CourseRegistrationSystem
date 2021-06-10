@@ -1,3 +1,4 @@
+import course_registration_system.Database_login;
 import course_registration_system.Login;
 import dao.UserDao;
 
@@ -9,8 +10,8 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
            @Override
            public void run() {
-               Login loginForm = new Login();
-               loginForm.setVisible(true);
+               Database_login database_login = new Database_login();
+               database_login.setVisible(true);
            }
        });
     }

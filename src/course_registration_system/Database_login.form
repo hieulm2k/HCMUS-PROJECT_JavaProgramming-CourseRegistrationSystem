@@ -29,7 +29,7 @@
             <properties>
               <font size="20" style="1"/>
               <foreground color="-16698813"/>
-              <text value="COURSE REGISTRATION SYSTEM"/>
+              <text value="LOGIN TO DATABASE MYSQL"/>
             </properties>
           </component>
           <component id="b97f1" class="javax.swing.JLabel">
