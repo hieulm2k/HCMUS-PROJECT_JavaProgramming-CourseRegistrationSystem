@@ -1,6 +1,8 @@
 package course_registration_system;
 
 import course_registration_system.JPanel_MinistryDashboard.*;
+import course_registration_system.JPanel_StudentDashboard.AllCourseRegister;
+import course_registration_system.JPanel_StudentDashboard.AllRegister;
 import pojo.Users;
 
 import javax.swing.*;
@@ -77,29 +79,11 @@ public class StudentDashboard extends JFrame{
                     case "Dashboard":
                         showPanel(new Dashboard().getjPanel_dashboard());
                         break;
-                    case "Ministry Account":
-                        showPanel(new AllAccount(users).getjPanel_allAccount());
+                    case "Register Course":
+                        showPanel(new AllRegister(users).getjPanel_register());
                         break;
-                    case "Subject":
-                        showPanel(new AllSubject().getjPanel_subject());
-                        break;
-                    case "Semester":
-                        showPanel(new AllSemester().getjPanel_semester());
-                        break;
-                    case "Class":
-                        showPanel(new AllClass().getjPanel_class());
-                        break;
-                    case "Student Account":
-                        showPanel(new AllStudent(users).getjPanel_student());
-                        break;
-                    case "Session":
-                        showPanel(new AllSession().getjPanel_session());
-                        break;
-                    case "Course":
-                        showPanel(new AllCourse().getjPanel_allAccount());
-                        break;
-                    case "Register List":
-
+                    case "Course List":
+                       showPanel(new AllCourseRegister(users).getjPanel_course());
                         break;
                     case "My Account":
                         showPanel(new MyAccount(users).getjPanel_myAcount());

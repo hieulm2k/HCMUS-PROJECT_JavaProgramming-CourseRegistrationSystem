@@ -123,10 +123,9 @@ public class View_registerList extends JFrame{
                     new String[]{"Student Code", "Student Name", "Subject Code", "Subject Name", "Tutor", "Study Time", "Register Time"}
             );
 
-            registersList = RegisterDao.getByUserNCourse(users.getId(), courses.getId());
+            Registers registers = RegisterDao.getByUserNCourse(users.getId(), courses.getId());
 
-            if(registersList.stream().count()>0) {
-                for (Registers registers : registersList) {
+            if(registers!=null) {
                     Courses course = registers.getCourses();
                     Users user = registers.getUsers();
                     Subjects subjects = course.getSubjects();
@@ -139,7 +138,6 @@ public class View_registerList extends JFrame{
                     o[5] = getTimeCase(course.getTimeCase());
                     o[6] = registers.getTime();
                     model.addRow(o);
-                }
             }
             else {
                 JOptionPane.showMessageDialog(null, "This student has not registered for this course");

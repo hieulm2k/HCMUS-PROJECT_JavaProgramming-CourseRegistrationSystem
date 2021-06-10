@@ -1,17 +1,13 @@
-package course_registration_system.JPanel_MinistryDashboard;
+package course_registration_system.JPanel_StudentDashboard;
 
-import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.Add_account;
-import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.Edit_account;
-import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.ResetPassword_account;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allCourse.Add_course;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allSubject.View_registerList;
 import dao.CourseDao;
+import dao.RegisterDao;
 import dao.SemesterDao;
-import dao.SessionDao;
-import dao.UserDao;
 import pojo.Courses;
+import pojo.Registers;
 import pojo.Semesters;
-import pojo.Sessions;
 import pojo.Users;
 
 import javax.swing.*;
@@ -21,24 +17,23 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-public class AllCourse {
+public class AllCourseRegister {
     private JTable table_allCourse;
-    private JButton addButton;
-    private JButton editButton;
-    private JButton resetPasswordButton;
     private JButton deleteButton;
-    private JPanel jPanel_course;
     private JLabel jLabel_schoolYear;
     private JLabel jlabel_semester;
-    private JButton registerButton;
+    private JPanel jPanel_course;
+
     private List<Courses> coursesList;
     private DefaultTableModel model;
+    private Users users;
 
-    public JPanel getjPanel_allAccount() {
+    public JPanel getjPanel_course() {
         return jPanel_course;
     }
 
-    public AllCourse() {
+    public AllCourseRegister(Users u) {
+        users = u;
         createTable();
 
         deleteButton.addMouseListener(new MouseAdapter() {
@@ -49,8 +44,8 @@ public class AllCourse {
                     if(table_allCourse.getSelectedRow() != -1){
                         String id = table_allCourse.getValueAt(table_allCourse.getSelectedRow(),0).toString();
                         Courses courses = CourseDao.getById(Integer.parseInt(id));
-                        CourseDao.delete(courses)
-                        ;
+                        Registers registers = RegisterDao.getByUserNCourse(users.getId(), courses.getId());
+                        RegisterDao.delete(registers);
                         model.removeRow(table_allCourse.getSelectedRow());
                         JOptionPane.showMessageDialog(null, "Delete success!");
                     }
@@ -63,50 +58,17 @@ public class AllCourse {
                 }
             }
         });
-
-        addButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                Add_course add_course = new Add_course(model);
-                add_course.setVisible(true);
-            }
-        });
-
-        registerButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if(table_allCourse.getRowCount() > 0){
-                    if(table_allCourse.getSelectedRow() != -1){
-                        String id = table_allCourse.getValueAt(table_allCourse.getSelectedRow(),0).toString();
-                        Courses courses = CourseDao.getById(Integer.parseInt(id));
-                        View_registerList view_registerList = new View_registerList(courses);
-                        view_registerList.setVisible(true);
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null, "Please select a course to view register list!");
-                    }
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "Your table is empty, cannot view register list!");
-                }
-
-            }
-        });
     }
 
     private void createTable(){
         Semesters currentSemes = SemesterDao.getCurrent();
-        jLabel_schoolYear.setText(currentSemes.getSchoolYear() + " - ");
-        jlabel_semester.setText(currentSemes.getType()==1?"HK1":currentSemes.getType()==2?"HK2":"HK3");
         model = new DefaultTableModel(
                 null,
                 new String[]{"Id", "Code", "Name", "Credits", "Class", "Tutor", "Room", "Week Day", "Time", "Slot"}
         );
 
         if(currentSemes!=null) {
-            coursesList = CourseDao.getAllOfSemester(currentSemes.getId());
+            coursesList = RegisterDao.getByUserInSemes(users.getId(), currentSemes.getId());
             for (Courses courses : coursesList) {
                 Object[] o = new Object[10];
                 o[0] = courses.getId();

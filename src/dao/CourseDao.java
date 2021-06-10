@@ -28,14 +28,14 @@ public class CourseDao {
         return cours;
     }
 
-    public static List<Courses> getAllOfSemester(Semesters semesters){
+    public static List<Courses> getAllOfSemester(int semesId){
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Courses> course = null;
 
         try{
-            final String hql = "select cl from Courses cl where cl.semesters=:semester";
+            final String hql = "select cl from Courses cl where cl.semesters.id=:id";
             Query query = session.createQuery(hql);
-            query.setParameter("semester", semesters);
+            query.setParameter("id", semesId);
             course = query.list();
         } catch (HibernateException e) {
             System.out.println(e);

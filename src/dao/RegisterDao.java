@@ -4,6 +4,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import pojo.Courses;
 import pojo.Registers;
 import util.HibernateUtil;
 
@@ -46,9 +47,9 @@ public class RegisterDao {
         return registers;
     }
 
-    public static List<Registers> getByUserNCourse(int userId, int courseId){
+    public static Registers getByUserNCourse(int userId, int courseId){
         Session session = HibernateUtil.getSessionFactory().openSession();
-        List<Registers> registers = null;
+        Registers registers = null;
 
         try{
             final String hql = "select reg from Registers reg where reg.users.id=:userId and reg.courses.id=:courseId";
@@ -56,7 +57,9 @@ public class RegisterDao {
             query.setParameter("userId",userId);
             query.setParameter("courseId",courseId);
 
-            registers = query.list();
+            if(query.list().stream().count()>0){
+                registers = (Registers) query.list().get(0);
+            }
         } catch (HibernateException e) {
             System.out.println(e);
             registers = null;
@@ -64,6 +67,26 @@ public class RegisterDao {
             session.close();
         }
         return registers;
+    }
+
+    public static List<Courses> getByUserInSemes(int userId, int semesId){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Courses> coursesList = null;
+
+        try{
+            final String hql = "select reg.courses from Registers reg where reg.users.id=:userId and reg.courses.semesters.id=:semesId";
+            Query query = session.createQuery(hql);
+            query.setParameter("userId",userId);
+            query.setParameter("semesId",semesId);
+
+            coursesList = query.list();
+        } catch (HibernateException e) {
+            System.out.println(e);
+            coursesList = null;
+        } finally {
+            session.close();
+        }
+        return coursesList;
     }
 
     public static List<Registers> getBySubjectId(int id){

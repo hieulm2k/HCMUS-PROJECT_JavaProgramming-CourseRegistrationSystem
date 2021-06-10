@@ -105,7 +105,7 @@
                       <font size="18" style="1"/>
                       <foreground color="-1"/>
                       <opaque value="true"/>
-                      <text value="  Ministry Account"/>
+                      <text value="  Register Course"/>
                       <visible value="true"/>
                     </properties>
                   </component>
@@ -118,7 +118,7 @@
                       <font size="18" style="1"/>
                       <foreground color="-1"/>
                       <opaque value="true"/>
-                      <text value="  Subject"/>
+                      <text value="  Course List"/>
                     </properties>
                   </component>
                   <component id="76604" class="javax.swing.JLabel" binding="jLabel_menuItem9">

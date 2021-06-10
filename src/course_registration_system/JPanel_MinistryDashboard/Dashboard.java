@@ -23,7 +23,7 @@ public class Dashboard {
         jLabel_student.setText(String.valueOf(UserDao.getAllStudent().stream().count()));
         jLabel_class.setText(String.valueOf(ClassDao.getAll().stream().count()));
         jLabel_subject.setText(String.valueOf(SubjectDao.getAll().stream().count()));
-        jLabel_course.setText(String.valueOf(CourseDao.getAllOfSemester(SemesterDao.getCurrent()).stream().count()));
+        jLabel_course.setText(String.valueOf(CourseDao.getAllOfSemester(SemesterDao.getCurrent().getId()).stream().count()));
         jLabel_semester.setText(String.valueOf(SemesterDao.getAll().stream().count()));
     }
 

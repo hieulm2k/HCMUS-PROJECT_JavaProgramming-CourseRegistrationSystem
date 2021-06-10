@@ -33,10 +33,10 @@
         <many-to-one class="pojo.Semesters" name="semesters" fetch="join" lazy="false" cascade="save-update">
             <column name="SemesterID" sql-type="int" not-null="true"/>
         </many-to-one>
-        <many-to-one class="pojo.Subjects" name="subjects" fetch="join" lazy="false" cascade="save-update">
+        <many-to-one class="pojo.Subjects" name="subjects" fetch="join" lazy="false" cascade="merge">
             <column name="SubjectID" sql-type="int" not-null="true"/>
         </many-to-one>
-        <many-to-one class="pojo.Classes" name="classes" fetch="join" lazy="false" cascade="save-update">
+        <many-to-one class="pojo.Classes" name="classes" fetch="join" lazy="false" cascade="merge">
             <column name="ClassID" sql-type="int" not-null="true"/>
         </many-to-one>
     </class>
