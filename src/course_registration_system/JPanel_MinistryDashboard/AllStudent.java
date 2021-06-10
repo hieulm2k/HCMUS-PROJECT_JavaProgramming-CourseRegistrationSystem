@@ -7,7 +7,9 @@ import course_registration_system.JPanel_MinistryDashboard.JPanel_allStudent.Add
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allStudent.Edit_student;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allStudent.View_subject;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allSubject.Add_subject;
+import dao.SubjectDao;
 import dao.UserDao;
+import pojo.Subjects;
 import pojo.Users;
 
 import javax.swing.*;
@@ -25,6 +27,8 @@ public class AllStudent {
     private JButton deleteButton;
     private JPanel jPanel_student;
     private JButton vewSubjectButton;
+    private JButton searchButton;
+    private JTextField textField_student;
 
     private List<Users> usersList;
     private DefaultTableModel model;
@@ -134,6 +138,13 @@ public class AllStudent {
                 }
             }
         });
+        searchButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                trySearch();
+            }
+        });
     }
 
     private void createTable(){
@@ -151,6 +162,10 @@ public class AllStudent {
             o[5] = users.getDob().toString();
             model.addRow(o);
         }
+        setTable();
+    }
+
+    private void setTable(){
         table_allStudent.getTableHeader().setOpaque(false);
         table_allStudent.getTableHeader().setBackground(Color.DARK_GRAY);
         table_allStudent.getTableHeader().setForeground(Color.WHITE);
@@ -158,5 +173,36 @@ public class AllStudent {
         table_allStudent.setModel(model);
         table_allStudent.setFont(new Font("Serif", Font.PLAIN, 18));
         table_allStudent.setRowHeight(30);
+    }
+
+    private void trySearch(){
+        String code = textField_student.getText();
+
+        if(code.equals("")){
+            createTable();
+            return;
+        }
+
+        Users users = UserDao.getByStdCode(code);
+
+        if(users == null){
+            JOptionPane.showMessageDialog(null, "This student code is not exists, please try again!");
+        }
+        else {
+            model = new DefaultTableModel(
+                    null,
+                    new String[]{"Username", "Student Code", "Name", "Class", "Gender", "Date of birth"}
+            );
+
+            Object[] o = new Object[6];
+            o[0] = users.getUsername();
+            o[1] = users.getStdCode();
+            o[2] = users.getName();
+            o[3] = users.getClasses().getName();
+            o[4] = (users.getGender() == 1 ? "Male" : "Female");
+            o[5] = users.getDob().toString();
+            model.addRow(o);
+            setTable();
+        }
     }
 }

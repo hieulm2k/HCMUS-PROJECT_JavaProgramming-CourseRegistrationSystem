@@ -24,7 +24,7 @@ public class Add_course extends JFrame{
     public Add_course(DefaultTableModel m) {
         model = m;
         add(jPanel_root);
-        setTitle("Add Course Account");
+        setTitle("Add Course");
         setSize(490, 400);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -148,6 +148,7 @@ public class Add_course extends JFrame{
 
     public void loadComboboxClass(){
         List<Classes> classesList = ClassDao.getAll();
+        classesList.remove(0);
         for (Classes classes:classesList) {
             comboBox_class.addItem(classes.getName());
         }

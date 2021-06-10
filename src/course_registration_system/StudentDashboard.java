@@ -1,8 +1,14 @@
 package course_registration_system;
 
+import com.mysql.cj.Session;
 import course_registration_system.JPanel_MinistryDashboard.*;
 import course_registration_system.JPanel_StudentDashboard.AllCourseRegister;
 import course_registration_system.JPanel_StudentDashboard.AllRegister;
+import course_registration_system.JPanel_StudentDashboard.Dashboard_student;
+import dao.SemesterDao;
+import dao.SessionDao;
+import pojo.Semesters;
+import pojo.Sessions;
 import pojo.Users;
 
 import javax.swing.*;
@@ -10,6 +16,8 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.time.LocalDate;
+import java.util.List;
 
 public class StudentDashboard extends JFrame{
     private JPanel jPanel_root;
@@ -24,6 +32,8 @@ public class StudentDashboard extends JFrame{
     private JLabel jLabel_menuItem11;
     private JPanel jPanel_main;
     private Users users;
+    private Semesters currentSemes = SemesterDao.getCurrent();
+
     // default border for the menu items
     Border defaultBorder = BorderFactory.createMatteBorder(0,0,0,0, new Color(46,49,49));
 
@@ -54,7 +64,7 @@ public class StudentDashboard extends JFrame{
         menuLabels[3] = jLabel_menuItem10;
         menuLabels[4] = jLabel_menuItem11;
 
-        jPanel_main.add(new Dashboard().getjPanel_dashboard());
+        jPanel_main.add(new Dashboard_student().getjPanel_root());
 
         addActionToMenuLabels();
     }
@@ -77,10 +87,15 @@ public class StudentDashboard extends JFrame{
                 setLabelBackground(label, menuLabels);
                 switch (label.getText().trim()){
                     case "Dashboard":
-                        showPanel(new Dashboard().getjPanel_dashboard());
+                        showPanel(new Dashboard_student().getjPanel_root());
                         break;
                     case "Register Course":
-                        showPanel(new AllRegister(users).getjPanel_register());
+                        if(!checkSession()){
+                            JOptionPane.showMessageDialog(null,"Register session expired, cannot register!");
+                        }
+                        else {
+                            showPanel(new AllRegister(users).getjPanel_register());
+                        }
                         break;
                     case "Course List":
                        showPanel(new AllCourseRegister(users).getjPanel_course());
@@ -141,5 +156,29 @@ public class StudentDashboard extends JFrame{
 
         label.setBackground(Color.WHITE);
         label.setForeground(new Color(36, 37, 42));
+    }
+
+    public boolean checkSession(){
+        if(currentSemes == null) return false;
+        LocalDate now = LocalDate.now();
+
+        Sessions current = getCurrentSession();
+        if(current == null)
+            return false;
+
+        if(now.compareTo(current.getStart().toLocalDate())>=0 && now.compareTo(current.getEnd().toLocalDate())<=0){
+            return true;
+        }
+
+        return false;
+    }
+
+    public Sessions getCurrentSession(){
+        List<Sessions> sessions = SessionDao.getAllOfSemester(currentSemes);
+        if(sessions.stream().count() == 0)
+            return null;
+
+        Sessions last = sessions.get((int) (sessions.stream().count()-1));
+        return last;
     }
 }

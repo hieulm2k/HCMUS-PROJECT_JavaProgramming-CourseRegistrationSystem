@@ -5,10 +5,8 @@ import course_registration_system.JPanel_MinistryDashboard.JPanel_allSubject.Vie
 import dao.CourseDao;
 import dao.RegisterDao;
 import dao.SemesterDao;
-import pojo.Courses;
-import pojo.Registers;
-import pojo.Semesters;
-import pojo.Users;
+import dao.SessionDao;
+import pojo.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -20,13 +18,13 @@ import java.util.List;
 public class AllCourseRegister {
     private JTable table_allCourse;
     private JButton deleteButton;
-    private JLabel jLabel_schoolYear;
-    private JLabel jlabel_semester;
+    private JLabel jlabel_information;
     private JPanel jPanel_course;
 
     private List<Courses> coursesList;
     private DefaultTableModel model;
     private Users users;
+    private Semesters currentSemes = SemesterDao.getCurrent();
 
     public JPanel getjPanel_course() {
         return jPanel_course;
@@ -35,6 +33,13 @@ public class AllCourseRegister {
     public AllCourseRegister(Users u) {
         users = u;
         createTable();
+
+        jlabel_information.setText(currentSemes.getSchoolYear() +" - " + (currentSemes.getType()==1?"HK1":currentSemes.getType()==2?"HK2":"HK3"));
+        createTable();
+
+        if(getCurrentSession()==null){
+            deleteButton.setVisible(false);
+        }
 
         deleteButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -61,7 +66,6 @@ public class AllCourseRegister {
     }
 
     private void createTable(){
-        Semesters currentSemes = SemesterDao.getCurrent();
         model = new DefaultTableModel(
                 null,
                 new String[]{"Id", "Code", "Name", "Credits", "Class", "Tutor", "Room", "Week Day", "Time", "Slot"}
@@ -80,7 +84,7 @@ public class AllCourseRegister {
                 o[6] = courses.getRoom();
                 o[7] = getWeekDay(courses.getWeekDay());
                 o[8] = getTimeCase(courses.getTimeCase());
-                o[9] = courses.getMaxSlot();
+                o[9] = countAvailableSlot(courses) + "/"+ courses.getMaxSlot();
                 model.addRow(o);
             }
         }
@@ -100,6 +104,11 @@ public class AllCourseRegister {
         table_allCourse.getColumnModel().getColumn(5).setPreferredWidth(200);
         table_allCourse.getColumnModel().getColumn(2).setPreferredWidth(200);
 
+    }
+
+    public int countAvailableSlot(Courses course){
+        List<Courses> courses = RegisterDao.getByCourseInSemes(course.getId(), currentSemes.getId());
+        return (int) courses.stream().count();
     }
 
     private String getTimeCase(int timeCase){
@@ -151,5 +160,14 @@ public class AllCourseRegister {
                 break;
         }
         return day;
+    }
+
+    public Sessions getCurrentSession(){
+        List<Sessions> sessions = SessionDao.getAllOfSemester(currentSemes);
+        if(sessions.stream().count() == 0)
+            return null;
+
+        Sessions last = sessions.get((int) (sessions.stream().count()-1));
+        return last;
     }
 }

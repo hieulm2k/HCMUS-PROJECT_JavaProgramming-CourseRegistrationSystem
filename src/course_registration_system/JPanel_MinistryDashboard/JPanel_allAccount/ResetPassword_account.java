@@ -20,7 +20,7 @@ public class ResetPassword_account extends JFrame{
     public ResetPassword_account(Users u) {
         users = u;
         add(jPanel_root);
-        setTitle("Add Ministry Account");
+        setTitle("Reset Password");
         setSize(490, 200);
         setResizable(false);
         setLocationRelativeTo(null);

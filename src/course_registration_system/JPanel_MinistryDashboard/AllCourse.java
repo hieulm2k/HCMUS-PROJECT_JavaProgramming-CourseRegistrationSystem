@@ -5,14 +5,8 @@ import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.Edi
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.ResetPassword_account;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allCourse.Add_course;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allSubject.View_registerList;
-import dao.CourseDao;
-import dao.SemesterDao;
-import dao.SessionDao;
-import dao.UserDao;
-import pojo.Courses;
-import pojo.Semesters;
-import pojo.Sessions;
-import pojo.Users;
+import dao.*;
+import pojo.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -20,6 +14,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.Set;
 
 public class AllCourse {
     private JTable table_allCourse;
@@ -31,6 +26,8 @@ public class AllCourse {
     private JLabel jLabel_schoolYear;
     private JLabel jlabel_semester;
     private JButton registerButton;
+    private JButton searchButton;
+    private JTextField textField_subject;
     private List<Courses> coursesList;
     private DefaultTableModel model;
 
@@ -47,10 +44,10 @@ public class AllCourse {
                 super.mouseClicked(e);
                 if(table_allCourse.getRowCount() > 0){
                     if(table_allCourse.getSelectedRow() != -1){
-                        String id = table_allCourse.getValueAt(table_allCourse.getSelectedRow(),0).toString();
-                        Courses courses = CourseDao.getById(Integer.parseInt(id));
-                        CourseDao.delete(courses)
-                        ;
+                        String subjectName= table_allCourse.getValueAt(table_allCourse.getSelectedRow(),2).toString();
+                        String classes = table_allCourse.getValueAt(table_allCourse.getSelectedRow(),4).toString();
+                        Courses courses = CourseDao.getBySubjectNClass(subjectName,classes);
+                        CourseDao.delete(courses);
                         model.removeRow(table_allCourse.getSelectedRow());
                         JOptionPane.showMessageDialog(null, "Delete success!");
                     }
@@ -79,8 +76,9 @@ public class AllCourse {
                 super.mouseClicked(e);
                 if(table_allCourse.getRowCount() > 0){
                     if(table_allCourse.getSelectedRow() != -1){
-                        String id = table_allCourse.getValueAt(table_allCourse.getSelectedRow(),0).toString();
-                        Courses courses = CourseDao.getById(Integer.parseInt(id));
+                        String subjectName= table_allCourse.getValueAt(table_allCourse.getSelectedRow(),2).toString();
+                        String classes = table_allCourse.getValueAt(table_allCourse.getSelectedRow(),4).toString();
+                        Courses courses = CourseDao.getBySubjectNClass(subjectName,classes);
                         View_registerList view_registerList = new View_registerList(courses);
                         view_registerList.setVisible(true);
                     }
@@ -92,6 +90,13 @@ public class AllCourse {
                     JOptionPane.showMessageDialog(null, "Your table is empty, cannot view register list!");
                 }
 
+            }
+        });
+        searchButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                trySearch();
             }
         });
     }
@@ -125,7 +130,10 @@ public class AllCourse {
         else {
             coursesList = null;
         }
+        setTable();
+    }
 
+    private void setTable(){
         table_allCourse.getTableHeader().setOpaque(false);
         table_allCourse.getTableHeader().setBackground(Color.DARK_GRAY);
         table_allCourse.getTableHeader().setForeground(Color.WHITE);
@@ -137,7 +145,46 @@ public class AllCourse {
         table_allCourse.getColumnModel().getColumn(0).setMaxWidth(0);
         table_allCourse.getColumnModel().getColumn(5).setPreferredWidth(200);
         table_allCourse.getColumnModel().getColumn(2).setPreferredWidth(200);
+    }
 
+    private void trySearch(){
+        String code = textField_subject.getText();
+        if(code.equals("")){
+            createTable();
+            return;
+        }
+
+        Subjects subjects = SubjectDao.getByCode(code);
+        if(subjects == null) {
+            JOptionPane.showMessageDialog(null, "This subject is not exists, please try again!");
+            return;
+        }
+
+        Set<Courses> courses = subjects.getCoursesSet();
+        if(courses.stream().count() == 0){
+            JOptionPane.showMessageDialog(null, "Cannot find any courses, please try again!");
+        }
+        else {
+            model = new DefaultTableModel(
+                    null,
+                    new String[]{"Id", "Code", "Name", "Credits", "Class", "Tutor", "Room", "Week Day", "Time", "Slot"}
+            );
+            for(Courses course:courses) {
+                Object[] o = new Object[10];
+                o[0] = course.getId();
+                o[1] = course.getSubjects().getCode();
+                o[2] = course.getSubjects().getName();
+                o[3] = course.getSubjects().getCredit();
+                o[4] = course.getClasses().getName();
+                o[5] = course.getTutorName();
+                o[6] = course.getRoom();
+                o[7] = getWeekDay(course.getWeekDay());
+                o[8] = getTimeCase(course.getTimeCase());
+                o[9] = course.getMaxSlot();
+                model.addRow(o);
+            }
+            setTable();
+        }
     }
 
     private String getTimeCase(int timeCase){

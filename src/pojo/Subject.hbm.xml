@@ -18,7 +18,7 @@
         <property name="credit">
             <column name="Credit" sql-type="int" not-null="true"/>
         </property>
-        <set name="coursesSet" inverse="true">
+        <set name="coursesSet" inverse="true" lazy="false">
             <key>
                 <column name="SubjectID" sql-type="int" not-null="true"/>
             </key>

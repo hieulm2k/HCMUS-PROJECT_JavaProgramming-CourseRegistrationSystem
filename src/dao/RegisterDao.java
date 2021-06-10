@@ -89,6 +89,26 @@ public class RegisterDao {
         return coursesList;
     }
 
+    public static List<Courses> getByCourseInSemes(int courseId, int semesId){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Courses> coursesList = null;
+
+        try{
+            final String hql = "select reg.courses from Registers reg where reg.courses.id=:courseId and reg.courses.semesters.id=:semesId";
+            Query query = session.createQuery(hql);
+            query.setParameter("courseId",courseId);
+            query.setParameter("semesId",semesId);
+
+            coursesList = query.list();
+        } catch (HibernateException e) {
+            System.out.println(e);
+            coursesList = null;
+        } finally {
+            session.close();
+        }
+        return coursesList;
+    }
+
     public static List<Registers> getBySubjectId(int id){
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Registers> registers = null;

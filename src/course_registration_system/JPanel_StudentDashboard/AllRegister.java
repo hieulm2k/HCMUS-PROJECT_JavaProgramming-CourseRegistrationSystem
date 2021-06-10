@@ -5,10 +5,8 @@ import course_registration_system.JPanel_MinistryDashboard.JPanel_allSubject.Vie
 import dao.CourseDao;
 import dao.RegisterDao;
 import dao.SemesterDao;
-import pojo.Courses;
-import pojo.Registers;
-import pojo.Semesters;
-import pojo.Users;
+import dao.SessionDao;
+import pojo.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -25,6 +23,7 @@ public class AllRegister {
     private JButton registerButton;
     private JLabel jLabel_information;
     private JPanel jPanel_register;
+    private JLabel jLabel_count;
     private Users users;
     private Semesters currentSemes = SemesterDao.getCurrent();
     private List<Courses> coursesList;
@@ -36,9 +35,12 @@ public class AllRegister {
 
     public AllRegister(Users u) {
         users = u;
-//        jLabel_information.setText(currentSemes.getSchoolYear() +" - " + (currentSemes.getType()==1?"HK1":currentSemes.getType()==2?"HK2":"HK3")
-//        + "(Register time: " + currentSemes.getSessionsSet().stream().count());
+
+        jLabel_information.setText(currentSemes.getSchoolYear() +" - " + (currentSemes.getType()==1?"HK1":currentSemes.getType()==2?"HK2":"HK3")
+        + "(Register time: " + getCurrentSession().getStart().toString() + " to " + getCurrentSession().getEnd().toString() +")");
         createTable();
+
+        jLabel_count.setText("Course registered: " + String.valueOf(RegisterDao.getByUserInSemes(users.getId(), currentSemes.getId()).stream().count()) +"/8");
 
         registerButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -64,6 +66,7 @@ public class AllRegister {
 
                         saveRegister(courses);
                         createTable();
+                        jLabel_count.setText("Course registered: " + String.valueOf(RegisterDao.getByUserInSemes(users.getId(), currentSemes.getId()).stream().count() +"/8"));
                         JOptionPane.showMessageDialog(null, "Register success!");
                     }
                     else{
@@ -75,6 +78,11 @@ public class AllRegister {
                 }
             }
         });
+    }
+
+    private boolean checkMaxSlot(Courses courses){
+        if(countAvailableSlot(courses) == courses.getMaxSlot()) return true;
+        return false;
     }
 
     private boolean checkMaxCourse(){
@@ -92,12 +100,6 @@ public class AllRegister {
                 }
             }
         }
-        return false;
-    }
-
-    private boolean checkMaxSlot(Courses c){
-        List<Registers> registers = RegisterDao.getByCourseId(c.getId());
-        if(registers!=null && registers.stream().count() == c.getMaxSlot()) return true;
         return false;
     }
 
@@ -131,7 +133,7 @@ public class AllRegister {
                 o[6] = courses.getRoom();
                 o[7] = getWeekDay(courses.getWeekDay());
                 o[8] = getTimeCase(courses.getTimeCase());
-                o[9] = courses.getMaxSlot();
+                o[9] = countAvailableSlot(courses) + "/"+ courses.getMaxSlot();
                 model.addRow(o);
             }
         }
@@ -225,5 +227,19 @@ public class AllRegister {
         }
 
         return res;
+    }
+
+    public Sessions getCurrentSession(){
+        List<Sessions> sessions = SessionDao.getAllOfSemester(currentSemes);
+        if(sessions.stream().count() == 0)
+            return null;
+
+        Sessions last = sessions.get((int) (sessions.stream().count()-1));
+        return last;
+    }
+
+    public int countAvailableSlot(Courses course){
+        List<Courses> courses = RegisterDao.getByCourseInSemes(course.getId(), currentSemes.getId());
+        return (int) courses.stream().count();
     }
 }

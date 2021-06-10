@@ -3,7 +3,9 @@ package course_registration_system.JPanel_MinistryDashboard;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allSubject.Add_subject;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allSubject.Edit_subject;
 import dao.SubjectDao;
+import dao.UserDao;
 import pojo.Subjects;
+import pojo.Users;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -18,6 +20,8 @@ public class AllSubject {
     private JButton editButton;
     private JButton deleteButton;
     private JPanel jPanel_subject;
+    private JButton searchButton;
+    private JTextField textField_subject;
     private JButton registerListButton;
     private List<Subjects> subjectsList;
     private DefaultTableModel model;
@@ -82,6 +86,15 @@ public class AllSubject {
                 }
             }
         });
+
+
+        searchButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                trySearch();
+            }
+        });
     }
 
     private void createTable(){
@@ -96,6 +109,10 @@ public class AllSubject {
             o[2] = subjects.getCredit();
             model.addRow(o);
         }
+        setTable();
+    }
+
+    private void setTable(){
         table_subject.getTableHeader().setOpaque(false);
         table_subject.getTableHeader().setBackground(Color.DARK_GRAY);
         table_subject.getTableHeader().setForeground(Color.WHITE);
@@ -103,5 +120,33 @@ public class AllSubject {
         table_subject.setModel(model);
         table_subject.setFont(new Font("Serif", Font.PLAIN, 18));
         table_subject.setRowHeight(30);
+    }
+
+    private void trySearch(){
+        String code = textField_subject.getText();
+
+        if(code.equals("")){
+            createTable();
+            return;
+        }
+
+        Subjects subjects = SubjectDao.getByCode(code);
+
+        if(subjects == null){
+            JOptionPane.showMessageDialog(null, "This subject code is not exists, please try again!");
+        }
+        else {
+            model = new DefaultTableModel(
+                    null,
+                    new String[]{"Code", "Name", "Num of Credits"}
+            );
+
+            Object[] o = new Object[3];
+            o[0] = subjects.getCode();
+            o[1] = subjects.getName();
+            o[2] = subjects.getCredit();
+            model.addRow(o);
+            setTable();
+        }
     }
 }

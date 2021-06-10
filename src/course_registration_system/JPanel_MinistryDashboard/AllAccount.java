@@ -3,7 +3,11 @@ package course_registration_system.JPanel_MinistryDashboard;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.Add_account;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.Edit_account;
 import course_registration_system.JPanel_MinistryDashboard.JPanel_allAccount.ResetPassword_account;
+import dao.RegisterDao;
 import dao.UserDao;
+import pojo.Courses;
+import pojo.Registers;
+import pojo.Subjects;
 import pojo.Users;
 
 import javax.swing.*;
@@ -20,6 +24,8 @@ public class AllAccount {
     private JButton deleteButton;
     private JButton editButton;
     private JButton resetPasswordButton;
+    private JButton searchButton;
+    private JTextField textField_ministry;
     private List<Users> usersList;
     private DefaultTableModel model;
     private Users user;
@@ -107,6 +113,13 @@ public class AllAccount {
                 }
             }
         });
+        searchButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                trySearch();
+            }
+        });
     }
 
     private void createTable(){
@@ -122,6 +135,10 @@ public class AllAccount {
             o[3] = users.getDob().toString();
             model.addRow(o);
         }
+        setTable();
+    }
+
+    private void setTable(){
         table_allAccount.getTableHeader().setOpaque(false);
         table_allAccount.getTableHeader().setBackground(Color.DARK_GRAY);
         table_allAccount.getTableHeader().setForeground(Color.WHITE);
@@ -129,5 +146,33 @@ public class AllAccount {
         table_allAccount.setModel(model);
         table_allAccount.setFont(new Font("Serif", Font.PLAIN, 18));
         table_allAccount.setRowHeight(30);
+    }
+
+    private void trySearch(){
+        String username = textField_ministry.getText();
+        if(username.equals("")){
+            createTable();
+            return;
+        }
+
+        Users users = UserDao.getByUsername(username);
+
+        if(users == null){
+            JOptionPane.showMessageDialog(null, "This username is not exists, please try again!");
+        }
+        else {
+            model = new DefaultTableModel(
+                    null,
+                    new String[]{"Username", "Name", "Gender", "Date of birth"}
+            );
+
+            Object[] o = new Object[4];
+            o[0] = users.getUsername();
+            o[1] = users.getName();
+            o[2] = (users.getGender() == 1 ? "Male" : "Female");
+            o[3] = users.getDob().toString();
+            model.addRow(o);
+            setTable();
+        }
     }
 }
